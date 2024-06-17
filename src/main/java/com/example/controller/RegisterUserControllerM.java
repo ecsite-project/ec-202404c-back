@@ -31,6 +31,6 @@ public class RegisterUserControllerM {
         System.out.println(request);
         User user = new User();
         BeanUtils.copyProperties(request, user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
 }
