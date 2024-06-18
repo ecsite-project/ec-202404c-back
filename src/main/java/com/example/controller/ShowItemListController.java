@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,8 +25,16 @@ public class ShowItemListController {
     private ShowItemListService showItemListService;
 
     @GetMapping
-    public ResponseEntity<List<Item>> showItem(Item item){
-        List<Item> itemList = showItemListService.showItem();
+    // TODO searchNameという変数をReact側でも合わせる
+    public ResponseEntity<List<Item>> showItem(Item item, @RequestBody String searchName){
+        List<Item> itemList = null;
+        if(searchName == null) {
+            // 検索文字列が空なら全件検索
+            itemList = showItemListService.showItem();
+        } else {
+            // 検索文字列があれば曖昧検索
+            itemList = showItemListService.searchByNameContaining(searchName);
+        }
         return new ResponseEntity<>(itemList, HttpStatus.CREATED);
     }
 }
