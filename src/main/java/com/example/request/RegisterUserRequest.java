@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.request;
 
 public class RegisterUserRequest {
 
