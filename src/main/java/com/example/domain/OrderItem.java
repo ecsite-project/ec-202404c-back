@@ -13,7 +13,8 @@ public class OrderItem {
     private Integer itemId;
     private Integer orderId;
     private Integer quantity;
-    private String item_type ;
+    private Item item;
+    private String itemType ;
     private Character size;
 
     @Override
@@ -23,9 +24,18 @@ public class OrderItem {
                 ", itemId=" + itemId +
                 ", orderId=" + orderId +
                 ", quantity=" + quantity +
-                ", item_type='" + item_type + '\'' +
+                ", item=" + item +
+                ", itemType='" + itemType + '\'' +
                 ", size=" + size +
                 '}';
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public Integer getId() {
@@ -60,12 +70,12 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public String getItem_type() {
-        return item_type;
+    public String getItemType() {
+        return itemType;
     }
 
-    public void setItem_type(String item_type) {
-        this.item_type = item_type;
+    public void setItemType(String item_type) {
+        this.itemType = item_type;
     }
 
     public Character getSize() {

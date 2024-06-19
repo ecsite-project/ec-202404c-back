@@ -1,11 +1,14 @@
 package com.example.controller;
 
 import com.example.domain.Order;
+import com.example.request.OrderRequest;
 import com.example.service.ConfirmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -30,10 +33,11 @@ public class ConfirmController {
 //        user.setTelephone("123-456-7890");
 //        return new ResponseEntity<>(user, HttpStatus.CREATED);
 //    }
-//TODO curlコマンドで実行確認
+
+
     @PostMapping("")
-    public ResponseEntity<Order> showConfirm(@RequestBody Integer orderId){
-        Order order  = confirmService.showConfirm(orderId);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+    public ResponseEntity<List<Order>> showConfirm(@RequestBody OrderRequest orderRequest){
+        List<Order> orderList  = confirmService.showConfirm(orderRequest.getOrderId());
+        return new ResponseEntity<>(orderList, HttpStatus.CREATED);
     }
 }

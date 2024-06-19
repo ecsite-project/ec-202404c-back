@@ -21,7 +21,7 @@ public class ConfirmService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order showConfirm(Integer orderId){
+    public List<Order> showConfirm(Integer orderId){
         return orderRepository.load(orderId);
     }
 }
