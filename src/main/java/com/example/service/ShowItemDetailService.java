@@ -6,6 +6,7 @@ import com.example.domain.Item;
 import com.example.repository.BottomRepository;
 import com.example.repository.ItemRepository;
 import com.example.repository.TopRepository;
+import com.example.response.ItemDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,11 @@ public class ShowItemDetailService {
             return bottomRepository.findAll();
         }
         return null;
+    }
+
+    public ItemDetailResponse getItemDetail(Integer itemId){
+//        return
+        return itemRepository.findById(itemId);
     }
 
 

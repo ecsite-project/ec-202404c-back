@@ -13,17 +13,17 @@ public class Set {
     /**
      * セットに含まれるアイテムのID。
      */
-    private Long itemId;
+    private Integer itemId;
 
     /**
      * セットのトップアイテムのID。
      */
-    private Long topId;
+    private Integer topId;
 
     /**
      * セットのボトムアイテムのID。
      */
-    private Long bottomId;
+    private Integer bottomId;
 
     public Integer getId() {
         return id;
@@ -33,27 +33,27 @@ public class Set {
         this.id = id;
     }
 
-    public Long getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 
-    public Long getTopId() {
+    public Integer getTopId() {
         return topId;
     }
 
-    public void setTopId(Long topId) {
+    public void setTopId(Integer topId) {
         this.topId = topId;
     }
 
-    public Long getBottomId() {
+    public Integer getBottomId() {
         return bottomId;
     }
 
-    public void setBottomId(Long bottomId) {
+    public void setBottomId(Integer bottomId) {
         this.bottomId = bottomId;
     }
 }
