@@ -1,4 +1,117 @@
 package com.example.controller;
 
+import com.example.WebApiResponseObject;
+import com.example.domain.User;
+import com.example.request.LoginRequest;
+import com.example.security.Authorize;
+import com.example.security.JsonWebTokenUtil;
+import com.example.security.NonAuthorize;
+import com.example.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * ログイン・ログアウトを行うコントローラです.
+ *
+ * @author haruka.yamaneki
+ */
+@RestController
+@RequestMapping("/user")
+//CrossOrigin対応(異なるサーバーからの呼び出しを許可)
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE })
 public class AuthController {
+
+    @Autowired
+    private AuthService authService;
+
+    /**
+     * ログインを行います.
+     * @param request
+     * @param result
+     * @param model
+     * @param response
+     * @return
+     */
+    @NonAuthorize // 認可しない
+    @PostMapping("/login")
+    public WebApiResponseObject login(@RequestBody LoginRequest request, BindingResult result, Model model,
+                                      HttpServletResponse response) {
+        WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
+        Map<String, Object> responseMap = new HashMap<>();
+
+        User user = authService.login(request.getEmail(), request.getPassword());
+
+        if (user == null) {
+            webApiResponseObject.setStatus("error");
+            webApiResponseObject.setMessage("メールアドレス、またはパスワードが間違っています。");
+            webApiResponseObject.setErrorCode("E-01");
+            System.out.println("WebApiResponseMessage:" + webApiResponseObject);
+            return webApiResponseObject;
+        }
+        // 成功情報をレスポンス
+        webApiResponseObject.setStatus("success");
+        webApiResponseObject.setMessage("OK.");
+        webApiResponseObject.setErrorCode("E-00");
+        responseMap.put("user", user);
+        webApiResponseObject.setResponseMap(responseMap);
+        System.out.println(webApiResponseObject);
+
+        // 認証トークンを発行してレスポンスに詰めます
+
+        createAndResponseAccessToken(user, response);
+        return webApiResponseObject;
+    }
+
+    /**
+     * ログアウトをします.
+     *
+     * <pre>
+     * curl -X POST -H "Content-Type: application/json" "http://localhost:8080/ecsite-api/user/logout"
+     * </pre>
+     *
+     * @return WebAPIのレスポンス情報
+     */
+    @Authorize // 認可する
+    @PostMapping("/logout")
+    public WebApiResponseObject logout() {
+        // 成功情報をレスポンス
+        WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
+        webApiResponseObject.setStatus("success");
+        webApiResponseObject.setMessage("OK.");
+        webApiResponseObject.setErrorCode("E-00");
+        System.out.println(webApiResponseObject);
+        return webApiResponseObject;
+
+    }
+
+    /*
+     * 認証トークンを発行してレスポンスに詰めます.
+     *
+     * @param user ログイン成功したユーザ情報
+     *
+     * @param response レスポンス情報
+     */
+    private void createAndResponseAccessToken(User user, HttpServletResponse response) {
+        // 認証トークン=JWT（JSON Web Token）を発行
+        JsonWebTokenUtil jsonWebTokenUtil = new JsonWebTokenUtil();
+        String jsonWebToken = jsonWebTokenUtil.generateToken(user.getId().toString());
+        System.out.println("jsonWebToken:" + jsonWebToken);
+
+        // CrossOrigin対応しているWebAPIでカスタムレスポンスヘッダを指定する場合、
+        // TypeScript側で取得するには以下の1行が必要
+        response.addHeader("Access-Control-Expose-Headers", "access-token");
+        // 認証トークン=JWT（JSON Web Token）を発行しレスポンスデータに含ませる
+        response.addHeader("access-token", jsonWebToken);
+    }
+
+
+
 }
+

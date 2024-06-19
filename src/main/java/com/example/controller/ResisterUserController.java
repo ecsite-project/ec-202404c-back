@@ -34,7 +34,7 @@ public class ResisterUserController {
     }
 
     @PostMapping("/register")
-    public void registerUser(RegisterUserRequest registerUserRequest){
+    public void registerUser(@RequestBody RegisterUserRequest registerUserRequest){
         User user = new User();
         BeanUtils.copyProperties(registerUserRequest,user);
         registerUserService.registerUser(user);
