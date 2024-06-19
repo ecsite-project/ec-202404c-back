@@ -1,38 +1,21 @@
 package com.example.service;
 
-import com.example.domain.Top;
-import com.example.domain.Bottom;
-import com.example.domain.Set;
-import com.example.repository.TopRepository;
-import com.example.repository.BottomRepository;
-import com.example.repository.SetRepository;
+import com.example.domain.Item;
+import com.example.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ShowItemListService {
-    @Autowired
-    private TopRepository topRepository;
+
 
     @Autowired
-    private BottomRepository bottomRepository;
+    private ItemRepository repository;
 
-    @Autowired
-    private SetRepository setRepository;
-
-    public List<Object> getAllTops() {
-        return Collections.singletonList(topRepository.findAll());
-    }
-
-    public List<Object> getAllBottoms() {
-        return Collections.singletonList(bottomRepository.findAll());
-    }
-
-    public List<Object> getAllSets() {
-        return Collections.singletonList(setRepository.findAll());
+    public List<Item> getItemByType(String itemType) {
+        return repository.findByType(itemType);
     }
 }
 

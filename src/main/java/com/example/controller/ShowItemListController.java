@@ -31,21 +31,17 @@ public class ShowItemListController {
     @GetMapping("/{itemType}")
     public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType) {
         ItemTypeResponse response = new ItemTypeResponse();
-        List<Object> items = new ArrayList<>();
+        List<Item> items;
 
-        if (itemType.equalsIgnoreCase("top")) {
-            items.addAll(showItemListService.getAllTops());
-
-        } else if (itemType.equalsIgnoreCase("bottom")) {
-            items.addAll(showItemListService.getAllBottoms());
-
-        } else if (itemType.equalsIgnoreCase("set")) {
-            items.addAll(showItemListService.getAllSets());
-
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        switch (itemType.toLowerCase()) {
+            case "top":
+            case "bottom":
+            case "set":
+                items = showItemListService.getItemByType(itemType.toLowerCase());
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
         response.setItems(items);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

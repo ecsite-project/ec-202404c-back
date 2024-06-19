@@ -1,7 +1,6 @@
 package com.example.repository;
 
 
-import com.example.domain.Bottom;
 import com.example.domain.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,13 +14,10 @@ public class SetRepository {
 
     /*
     CREATE TABLE Sets (
-    id SERIAL PRIMARY KEY,
-    top_id INTEGER NOT NULL REFERENCES Tops(id),
-    bottom_id INTEGER NOT NULL REFERENCES Bottoms(id),
-    name TEXT NOT NULL,
-    description TEXT,
-    price INTEGER NOT NULL CHECK (price >= 0),
-    image_path TEXT
+        id SERIAL PRIMARY KEY,
+        item_id  INTEGER NOT NULL REFERENCES Items(id),
+        top_id INTEGER NOT NULL REFERENCES Items(id),
+        bottom_id INTEGER NOT NULL REFERENCES Items(id)
     );
      */
 
@@ -34,12 +30,9 @@ public class SetRepository {
     private static final RowMapper<Set> SET_ROW_MAPPER = (rs, i) -> {
         Set set = new Set();
         set.setId(rs.getInt("id"));
-        set.setTopId(rs.getInt("top_id"));
-        set.setBottomId(rs.getInt("bottom_id"));
-        set.setName(rs.getString("name"));
-        set.setDescription(rs.getString("description"));
-        set.setPrice(rs.getInt("price"));
-        set.setImagePath(rs.getString("image_path"));
+        set.setItemId(rs.getLong("item_id"));
+        set.setTopId(rs.getLong("top_id"));
+        set.setBottomId(rs.getLong("bottom_id"));
         return set;
     };
 
@@ -50,9 +43,12 @@ public class SetRepository {
      * @return 商品一覧
      */
     public List<Set> findAll() {
-        String sql = "SELECT id,name,top_id,bottom_id,description,price,image_path FROM Sets ORDER BY id;";
-        List<Set> SetList = template.query(sql, SET_ROW_MAPPER);
-        return SetList;
+        String sql = """
+            SELECT id, item_id, top_id, bottom_id 
+            FROM Sets 
+            ORDER BY id;
+            """;
+        return template.query(sql, SET_ROW_MAPPER);
     }
 }
 

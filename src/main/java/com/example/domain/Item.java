@@ -1,15 +1,39 @@
 package com.example.domain;
 
+/**
+ * 商品を表すエンティティクラス。
+ */
 public class Item {
 
+    /**
+     * 商品のID。
+     */
     private Integer id;
-    private Integer topId;
-    private Integer bottomId;
-    private String name;
-    private String description;
-    private Integer price;
-    private String imagePath;
 
+    /**
+     * 商品の名前。
+     */
+    private String name;
+
+    /**
+     * 商品の説明。
+     */
+    private String description;
+
+    /**
+     * 商品の価格。
+     */
+    private Integer price;
+
+    /**
+     * 商品の種類。 ('top', 'bottom', 'set')
+     */
+    private String itemType;
+
+    /**
+     * 商品の画像パス。
+     */
+    private String imagePath;
 
     public Integer getId() {
         return id;
@@ -17,22 +41,6 @@ public class Item {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTopId() {
-        return topId;
-    }
-
-    public void setTopId(Integer topId) {
-        this.topId = topId;
-    }
-
-    public Integer getBottomId() {
-        return bottomId;
-    }
-
-    public void setBottomId(Integer bottomId) {
-        this.bottomId = bottomId;
     }
 
     public String getName() {
@@ -59,6 +67,14 @@ public class Item {
         this.price = price;
     }
 
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
     public String getImagePath() {
         return imagePath;
     }
@@ -66,6 +82,17 @@ public class Item {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-}
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", itemType='" + itemType + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
+    }
+}
 
