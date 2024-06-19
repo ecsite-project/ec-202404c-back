@@ -3,6 +3,7 @@ package com.example.repository;
 import com.example.domain.Order;
 import com.example.domain.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,27 +16,8 @@ public class OrderRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
-        Order order = new Order();
-        order.setId(rs.getInt("id"));
-        order.setUserId(rs.getInt("user_id"));
-        order.setStatus(rs.getInt("status"));
-        order.setTotalPrice(rs.getInt("total_price"));
-        order.setOrderDate(rs.getDate("order_date"));
-        order.setDestinationName(rs.getString("destination_name"));
-        order.setDestinationEmail(rs.getString("destination_email"));
-        order.setDestinationZipcode(rs.getString("destination_zipcode"));
-        order.setDestinationPrefecture(rs.getString("destination_prefecture"));
-        order.setDestinationMunicipalities(rs.getString("destination_municipalities"));
-        order.setDestinationAddress(rs.getString("destination_address"));
-        order.setDestinationTel(rs.getString("destination_tel"));
-        order.setDeliveryTime(rs.getTimestamp("delivery_time"));
-        order.setPaymentMethod(rs.getInt("payment_method"));
-        return order;
 
-
-    };
-
+    //TODO statusの変更はReactでやるかも
     /**
      * 注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
