@@ -2,6 +2,8 @@ package com.example.domain;
 
 public class User {
 
+    private Integer id;
+
     private String name;
 
     private String email;
@@ -10,9 +12,38 @@ public class User {
 
     private String zipcode;
 
+    private String prefecture;
+
+    private String municipalities;
+
     private String address;
 
     private String telephone;
+
+
+    public String getPrefecture() {
+        return prefecture;
+    }
+
+    public void setPrefecture(String prefecture) {
+        this.prefecture = prefecture;
+    }
+
+    public String getMunicipalities() {
+        return municipalities;
+    }
+
+    public void setMunicipalities(String municipalities) {
+        this.municipalities = municipalities;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -60,5 +91,20 @@ public class User {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", prefecture='" + prefecture + '\'' +
+                ", municipalities='" + municipalities + '\'' +
+                ", address='" + address + '\'' +
+                ", telephone='" + telephone + '\'' +
+                '}';
     }
 }
