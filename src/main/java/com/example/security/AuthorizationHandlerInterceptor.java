@@ -45,7 +45,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
                 || AnnotationUtils.findAnnotation(method, Authorize.class) != null) {
             // 付与されている場合は認可処理を実行
             JsonWebTokenUtil jsonWebTokenUtil = new JsonWebTokenUtil();
-            boolean isAuthorizaOK = jsonWebTokenUtil.authorize(request);
+            boolean isAuthorizaOK = jsonWebTokenUtil.authorize(request, response);
             System.out.println("認可する：" + isAuthorizaOK);
 
             if (!isAuthorizaOK) {

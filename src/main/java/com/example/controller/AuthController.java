@@ -3,16 +3,20 @@ package com.example.controller;
 import com.example.WebApiResponseObject;
 import com.example.domain.User;
 import com.example.request.LoginRequest;
-import com.example.security.Authorize;
-import com.example.security.JsonWebTokenUtil;
-import com.example.security.NonAuthorize;
+import com.example.security.*;
 import com.example.service.AuthService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +34,10 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private JwtBlacklistService jwtBlacklistService;
+
 
     /**
      * ログインを行います.
@@ -79,8 +87,25 @@ public class AuthController {
      * @return WebAPIのレスポンス情報
      */
     @Authorize // 認可する
-    @PostMapping("/logout")
-    public WebApiResponseObject logout() {
+    @PostMapping("/signout")
+    public WebApiResponseObject logout(HttpServletRequest request) {
+        // Authorizationの値を取得
+        String authorization = request.getHeader("Authorization");
+
+        // JWTトークンを取得
+        String accessToken = authorization.replace("Bearer ", "");
+
+        // トークンの有効期限を取得
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody();
+        Date expirationDate = claims.getExpiration();
+
+        // トークンをブラックリストに追加
+        jwtBlacklistService.addToBlacklist(accessToken, expirationDate);
+
         // 成功情報をレスポンス
         WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
         webApiResponseObject.setStatus("success");
@@ -88,7 +113,6 @@ public class AuthController {
         webApiResponseObject.setErrorCode("E-00");
         System.out.println(webApiResponseObject);
         return webApiResponseObject;
-
     }
 
     /*

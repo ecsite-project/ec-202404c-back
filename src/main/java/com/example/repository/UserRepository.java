@@ -76,6 +76,19 @@ public class UserRepository {
 
     }
 
+    /**
+     * 主キー検索をする.
+     *
+     * @param id ID
+     * @return ユーザー情報
+     */
+    public User load(int id) {
+        String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE id=:id;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        return template.queryForObject(sql, param, USER_ROW_MAPPER);
+    }
+
+
 
 
 
