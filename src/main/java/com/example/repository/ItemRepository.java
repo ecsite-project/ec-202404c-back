@@ -3,7 +3,9 @@ package com.example.repository;
 import com.example.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,6 +59,20 @@ public class ItemRepository {
     public List<Item> findAll() {
         String sql = "SELECT id,top_id,bottom_id,name,description,price,imagePath FROM items ORDER BY id;";
         List<Item> itemList = template.query(sql,ITEM_ROW_MAPPER);
+        return itemList;
+    }
+
+    /**
+     * 名前から商品を(曖昧)検索します.
+     *
+     * @param name 商品名
+     * @return 検索された商品の情報一覧
+     */
+    public List<Item> searchByNameContaining(String name) {
+        String sql = "SELECT id,top_id,bottom_id,name,description,price,imagePath FROM items WHERE name LIKE :name ORDER BY id;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+
+        List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
         return itemList;
     }
 
