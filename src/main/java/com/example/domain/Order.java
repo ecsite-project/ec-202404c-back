@@ -42,11 +42,6 @@ public class Order {
     private java.sql.Date deliveryDate;
 
     /**
-     * 住所のID。
-     */
-    private Integer addressId;
-
-    /**
      * 各注文商品のリスト1
      */
     private List<OrderItem> itemList;
@@ -107,14 +102,6 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public Integer getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
-    }
-
     public List<OrderItem> getItemList() {
         return itemList;
     }
@@ -133,7 +120,6 @@ public class Order {
                 ", orderDate=" + orderDate +
                 ", paymentMethodId=" + paymentMethodId +
                 ", deliveryDate=" + deliveryDate +
-                ", addressId=" + addressId +
                 ", itemList=" + itemList +
                 '}';
     }

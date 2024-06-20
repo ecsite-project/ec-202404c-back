@@ -3,8 +3,6 @@ package com.example.domain;
 public class User {
     private Integer id;
 
-    private Integer id;
-
     private String name;
 
     private String email;
