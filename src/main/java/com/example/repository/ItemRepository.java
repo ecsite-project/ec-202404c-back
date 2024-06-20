@@ -68,14 +68,16 @@ public class ItemRepository {
      * @param name 商品名
      * @return 検索された商品の情報一覧
      */
-    public List<Item> searchByNameContaining(String name) {
+    public List<Item> searchByNameContaining(String name, String itemType) {
         String sql = """
             SELECT id, name, description, price, item_type, image_path 
             FROM items 
             WHERE name LIKE :name 
+            AND
+            item_type = :itemType 
             ORDER BY id;
             """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("itemType", itemType);
         return template.query(sql, param, ITEM_ROW_MAPPER);
     }
 
