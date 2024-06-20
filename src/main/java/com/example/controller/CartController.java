@@ -46,5 +46,4 @@ public class CartController {
         System.out.println(request);
         return cartService.addItemToCart(request.getUserId(), request.getItemId(), request.getItemType(), request.getQuantity(), request.getSize());
     }
-
 }

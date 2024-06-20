@@ -3,6 +3,7 @@ package com.example.repository;
 import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -29,11 +30,8 @@ import java.util.Map;
 @Repository
 public class OrderRepository {
 
-    private final NamedParameterJdbcTemplate template;
-
-    public OrderRepository(NamedParameterJdbcTemplate template) {
-        this.template = template;
-    }
+    @Autowired
+    private NamedParameterJdbcTemplate template;
 
     /**
      * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractorです。
@@ -54,7 +52,6 @@ public class OrderRepository {
                     order.setOrderDate(rs.getTimestamp("order_date"));
                     order.setPaymentMethodId(rs.getInt("payment_method_id"));
                     order.setDeliveryDate(rs.getDate("delivery_date"));
-                    order.setAddressId(rs.getInt("address_id"));
                     order.setItemList(new ArrayList<>());
                 }
 
@@ -95,7 +92,6 @@ public class OrderRepository {
         order.setOrderDate(rs.getTimestamp("order_date"));
         order.setPaymentMethodId(rs.getInt("payment_method_id"));
         order.setDeliveryDate(rs.getDate("delivery_date"));
-        order.setAddressId(rs.getInt("address_id"));
         return order;
     };
 
