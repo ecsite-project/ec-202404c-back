@@ -30,9 +30,9 @@ public class SetRepository {
     private static final RowMapper<Set> SET_ROW_MAPPER = (rs, i) -> {
         Set set = new Set();
         set.setId(rs.getInt("id"));
-        set.setItemId(rs.getLong("item_id"));
-        set.setTopId(rs.getLong("top_id"));
-        set.setBottomId(rs.getLong("bottom_id"));
+        set.setItemId(rs.getInt("item_id"));
+        set.setTopId(rs.getInt("top_id"));
+        set.setBottomId(rs.getInt("bottom_id"));
         return set;
     };
 
