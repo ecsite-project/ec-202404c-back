@@ -33,15 +33,6 @@ public class UserRepository {
     ) ;
      */
 
-    /**
-     * Userオブジェクトを作成するローマッパーです.
-     */
-    private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
-        User user = new User();
-        //TODO setter gettter で　どうやって受け取るか
-
-        return user;
-    };
 
     /**
      * ユーザー登録を行います.
