@@ -29,7 +29,7 @@ public class ShowItemListController {
 
 
     @GetMapping("/{itemType}")
-    public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType, String searchName) {
+    public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType, @RequestBody(required = false) String searchName) {
         // レスポンスオブジェクトの初期化
         ItemTypeResponse response = new ItemTypeResponse();
         // アイテムのリストを格納する変数
