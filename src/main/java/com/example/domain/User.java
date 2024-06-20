@@ -1,6 +1,7 @@
 package com.example.domain;
 
 public class User {
+    private Integer id;
 
     private Integer id;
 
@@ -20,7 +21,6 @@ public class User {
 
     private String telephone;
 
-
     public String getPrefecture() {
         return prefecture;
     }
@@ -36,7 +36,7 @@ public class User {
     public void setMunicipalities(String municipalities) {
         this.municipalities = municipalities;
     }
-
+  
     public Integer getId() {
         return id;
     }

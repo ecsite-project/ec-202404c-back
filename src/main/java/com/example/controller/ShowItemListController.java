@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.domain.*;
 import com.example.request.RegisterUserRequest;
 import com.example.response.ItemTypeResponse;
+import com.example.security.Authorize;
+import com.example.security.NonAuthorize;
 import com.example.service.ShowItemListService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +29,14 @@ public class ShowItemListController {
     @Autowired
     private ShowItemListService showItemListService;
 
-
+    
     /**
      * 商品タイプに該当する商品を取得する.
      *
      * @param itemType 商品タイプ．top, set, bottom が有効
      * @return 商品一覧
      */
+    @NonAuthorize
     @GetMapping("/{itemType}")
     public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType) {
         ItemTypeResponse response = new ItemTypeResponse();
