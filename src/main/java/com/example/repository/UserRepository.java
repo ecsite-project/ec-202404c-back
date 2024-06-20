@@ -33,15 +33,6 @@ public class UserRepository {
     ) ;
      */
 
-    /**
-     * Userオブジェクトを作成するローマッパーです.
-     */
-    private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
-        User user = new User();
-        //TODO setter gettter で　どうやって受け取るか
-
-        return user;
-    };
 
     /**
      * ユーザー登録を行います.
@@ -49,7 +40,7 @@ public class UserRepository {
      * @param user ユーザー情報
      */
     public void insert(User user) {
-        String sql = "INSERT INTO users(id,name,email,password,zipcode,prefecture,municipalities,address,telephone)values(:id,:name,:email,:password,:zipcode,:prefecture,:municipalities,:address,:telephone);";
+        String sql = "INSERT INTO users(name,email,password,zipcode,prefecture,municipalities,address,telephone)values(:name,:email,:password,:zipcode,:prefecture,:municipalities,:address,:telephone);";
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
         template.update(sql, param);
     }
