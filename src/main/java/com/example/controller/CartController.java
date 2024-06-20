@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.Order;
 import com.example.domain.User;
 import com.example.request.AddItemToCartRequest;
+import com.example.request.DeleteItemFromCartRequest;
 import com.example.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +43,17 @@ public class CartController {
      * @return 追加したカート情報
      */
     @PostMapping("/add")
-    public Order addItemToCart(@RequestBody AddItemToCartRequest request) {
+    public ResponseEntity<Order> addItemToCart(@RequestBody AddItemToCartRequest request) {
+        Order cart = cartService.addItemToCart(request.getUserId(), request.getItemId(), request.getItemType(), request.getQuantity(), request.getSize());;
+        return ResponseEntity.ok(cart);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Order> deleteItemFromCart(@RequestBody DeleteItemFromCartRequest request) {
         System.out.println(request);
-        return cartService.addItemToCart(request.getUserId(), request.getItemId(), request.getItemType(), request.getQuantity(), request.getSize());
+        // サービスを利用して注文アイテムを削除し、アクティブな注文を取得する
+        Order cart = cartService.deleteOrderItem(request.getOrderItemId(), request.getUserId());
+
+        return ResponseEntity.ok(cart);
     }
 }

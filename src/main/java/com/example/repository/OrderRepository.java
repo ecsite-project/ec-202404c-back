@@ -209,4 +209,15 @@ public class OrderRepository {
                 .addValue("size", size);
         template.update(sql, param);
     }
+
+    /**
+     * 指定したOrderItemを削除します。
+     *
+     * @param orderItemId 注文アイテムID
+     */
+    public void deleteOrderItem(Integer orderItemId) {
+        String sql = "DELETE FROM OrderItems WHERE id = :orderItemId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+        template.update(sql, param);
+    }
 }

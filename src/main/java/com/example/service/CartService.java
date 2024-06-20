@@ -28,16 +28,27 @@ public class CartService {
         Order order = orderRepository.findActiveOrderByUserId(userId);
         System.out.println(order);
         if (order == null) {
-            System.out.println("insert order");
             Integer orderId = orderRepository.createOrder(userId);
-            System.out.println("insert orderItem");
             orderRepository.addOrderItem(orderId, itemId, quantity, size);
             return orderRepository.findById(orderId);
         } else {
-            System.out.println("found order");
-            System.out.println("insert orderItem");
             orderRepository.addOrderItem(order.getId(), itemId, quantity, size);
             return orderRepository.findById(order.getId());
         }
+    }
+
+    /**
+     * カートから指定した注文アイテムを削除し、アクティブな注文を返します。
+     *
+     * @param orderItemId 注文アイテムID
+     * @param userId ユーザーID
+     * @return アクティブな注文オブジェクト
+     */
+    public Order deleteOrderItem(Integer orderItemId, Integer userId) {
+        // 指定したOrderItemを削除する
+        orderRepository.deleteOrderItem(orderItemId);
+
+        // ユーザーIDとステータスIDが1のアクティブな注文を取得する
+        return orderRepository.findActiveOrderByUserId(userId);
     }
 }
