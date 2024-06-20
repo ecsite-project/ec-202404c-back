@@ -1,9 +1,6 @@
-package com.example.domain;
+package com.example.response;
 
-/**
- * 商品を表すエンティティクラス。
- */
-public class Item {
+public class ItemDetailResponse {
 
     /**
      * 商品のID。
@@ -34,6 +31,16 @@ public class Item {
      * 商品の画像パス。
      */
     private String imagePath;
+
+    /**
+     * セットのトップアイテムのID。
+     */
+    private Integer topId;
+
+    /**
+     * セットのボトムアイテムのID。
+     */
+    private Integer bottomId;
 
     public Integer getId() {
         return id;
@@ -83,16 +90,33 @@ public class Item {
         this.imagePath = imagePath;
     }
 
+    public Integer getTopId() {
+        return topId;
+    }
+
+    public void setTopId(Integer topId) {
+        this.topId = topId;
+    }
+
+    public Integer getBottomId() {
+        return bottomId;
+    }
+
+    public void setBottomId(Integer bottomId) {
+        this.bottomId = bottomId;
+    }
+
     @Override
     public String toString() {
-        return "Item{" +
+        return "ItemDetail{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", itemType='" + itemType + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", topId=" + topId +
+                ", bottomId=" + bottomId +
                 '}';
     }
 }
-

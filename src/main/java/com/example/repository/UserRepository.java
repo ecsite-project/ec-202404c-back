@@ -44,14 +44,13 @@ public class UserRepository {
      */
     private static final RowMapper<User> USER_ROW_MAPPER = new BeanPropertyRowMapper<>(User.class);
 
-
     /**
      * ユーザー登録を行います.
      *
      * @param user ユーザー情報
      */
     public void insert(User user) {
-        String sql = "INSERT INTO users(id,name,email,password,zipcode,prefecture,municipalities,address,telephone)values(:id,:name,:email,:password,:zipcode,:prefecture,:municipalities,:address,:telephone);";
+        String sql = "INSERT INTO users(name,email,password,zipcode,prefecture,municipalities,address,telephone)values(:name,:email,:password,:zipcode,:prefecture,:municipalities,:address,:telephone);";
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
         template.update(sql, param);
     }
