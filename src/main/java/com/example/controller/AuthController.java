@@ -74,6 +74,7 @@ public class AuthController {
         // 認証トークンを発行してレスポンスに詰めます
 
         createAndResponseAccessToken(user, response);
+
         return webApiResponseObject;
     }
 
@@ -125,15 +126,18 @@ public class AuthController {
     private void createAndResponseAccessToken(User user, HttpServletResponse response) {
         // 認証トークン=JWT（JSON Web Token）を発行
         JsonWebTokenUtil jsonWebTokenUtil = new JsonWebTokenUtil();
-        String jsonWebToken = jsonWebTokenUtil.generateToken(user.getId().toString());
+        String jsonWebToken = jsonWebTokenUtil.generateToken(user.getId().toString(), user.getName());
         System.out.println("jsonWebToken:" + jsonWebToken);
 
         // CrossOrigin対応しているWebAPIでカスタムレスポンスヘッダを指定する場合、
         // TypeScript側で取得するには以下の1行が必要
-        response.addHeader("Access-Control-Expose-Headers", "access-token");
+        response.addHeader("Access-Control-Expose-Headers", "access-token, user_id, username");
         // 認証トークン=JWT（JSON Web Token）を発行しレスポンスデータに含ませる
         response.addHeader("access-token", jsonWebToken);
+        response.addHeader("user_id", user.getId().toString());
+        response.addHeader("username", user.getName());
     }
+
 
 
 
