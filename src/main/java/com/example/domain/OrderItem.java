@@ -25,7 +25,7 @@ public class OrderItem {
     /**
      * サイズ。
      */
-    private char size;
+    private String size;
 
 
     public Integer getId() {
@@ -60,11 +60,11 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public char getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(char size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
