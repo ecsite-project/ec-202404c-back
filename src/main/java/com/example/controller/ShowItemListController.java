@@ -28,24 +28,26 @@ public class ShowItemListController {
     private ShowItemListService showItemListService;
 
 
+    /**
+     * 商品タイプに該当する商品を取得する.
+     *
+     * @param itemType 商品タイプ．top, set, bottom が有効
+     * @return 商品一覧
+     */
     @GetMapping("/{itemType}")
     public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType) {
         ItemTypeResponse response = new ItemTypeResponse();
-        List<Object> items = new ArrayList<>();
+        List<Item> items;
 
-        if (itemType.equalsIgnoreCase("top")) {
-            items.addAll(showItemListService.getAllTops());
-
-        } else if (itemType.equalsIgnoreCase("bottom")) {
-            items.addAll(showItemListService.getAllBottoms());
-
-        } else if (itemType.equalsIgnoreCase("set")) {
-            items.addAll(showItemListService.getAllSets());
-
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        switch (itemType.toLowerCase()) {
+            case "top":
+            case "bottom":
+            case "set":
+                items = showItemListService.getItemByType(itemType.toLowerCase());
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
         response.setItems(items);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

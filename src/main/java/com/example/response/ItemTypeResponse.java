@@ -1,15 +1,17 @@
 package com.example.response;
 
+import com.example.domain.Item;
+
 import java.util.*;
 
 public class ItemTypeResponse {
-    private List<Object> items;
+    private List<Item> items;
 
-    public List<Object> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Object> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
