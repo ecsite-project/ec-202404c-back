@@ -21,6 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 注文（Order）に関するデータアクセスを行うリポジトリクラスです.
+ *
+ * @author reon.hatsuda
+ */
 @Repository
 public class OrderRepository {
 
@@ -30,6 +35,9 @@ public class OrderRepository {
         this.template = template;
     }
 
+    /**
+     * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractorです。
+     */
     private static final ResultSetExtractor<Order> ORDER_RESULT_SET_EXTRACTOR = new ResultSetExtractor<Order>() {
         @Override
         public Order extractData(ResultSet rs) throws SQLException {
@@ -75,6 +83,9 @@ public class OrderRepository {
         }
     };
 
+    /**
+     * ResultSetからOrderオブジェクトをマッピングするためのRowMapperです。
+     */
     private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, rowNum) -> {
         Order order = new Order();
         order.setId(rs.getInt("order_id"));
@@ -88,6 +99,12 @@ public class OrderRepository {
         return order;
     };
 
+    /**
+     * 指定した注文IDに対応するOrderオブジェクトを取得します。
+     *
+     * @param orderId 注文ID
+     * @return 注文オブジェクト。見つからない場合はnull。
+     */
     public Order findById(Integer orderId) {
         String sql = """
             SELECT 
@@ -123,7 +140,12 @@ public class OrderRepository {
         return template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
     }
 
-    // ステータスIDが1である指定されたユーザーIDのOrderを取得する
+    /**
+     * 指定したユーザーIDに対応するアクティブな（ステータスIDが1の）Orderオブジェクトを取得します。
+     *
+     * @param userId ユーザーID
+     * @return アクティブなOrderオブジェクト。見つからない場合はnull。
+     */
     public Order findActiveOrderByUserId(Integer userId) {
         String sql = """
                 SELECT 
@@ -152,7 +174,12 @@ public class OrderRepository {
         }
     }
 
-    // Orderを新規作成するメソッド
+    /**
+     * 新しいOrderを作成し、そのIDを返します。
+     *
+     * @param userId ユーザーID
+     * @return 作成されたOrderのID
+     */
     public Integer createOrder(Integer userId) {
         String sql = """
             INSERT INTO Orders (user_id, status_id, total_price, order_date, payment_method_id, delivery_date, address_id)
@@ -165,7 +192,14 @@ public class OrderRepository {
         return keyHolder.getKey().intValue();
     }
 
-    // OrderItemを新規作成するメソッド
+    /**
+     * Orderに新しいOrderItemを追加します。
+     *
+     * @param orderId  注文ID
+     * @param itemId   商品ID
+     * @param quantity 数量
+     * @param size     サイズ
+     */
     public void addOrderItem(Integer orderId, Integer itemId, Integer quantity, String size) {
         String sql = """
             INSERT INTO OrderItems (order_id, item_id, quantity, size)
@@ -176,7 +210,7 @@ public class OrderRepository {
                 .addValue("orderId", orderId)
                 .addValue("itemId", itemId)
                 .addValue("quantity", quantity)
-                .addValue("size", String.valueOf(size));
+                .addValue("size", size);
         template.update(sql, param);
     }
 }

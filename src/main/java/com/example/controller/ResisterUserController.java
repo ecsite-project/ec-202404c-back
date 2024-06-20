@@ -34,10 +34,11 @@ public class ResisterUserController {
     }
 
     @PostMapping("/register")
-    public void registerUser(RegisterUserRequest registerUserRequest){
+    public ResponseEntity<Void> registerUser(RegisterUserRequest registerUserRequest){
         User user = new User();
         BeanUtils.copyProperties(registerUserRequest,user);
         registerUserService.registerUser(user);
+        return ResponseEntity.ok().build();
     }
 
 }

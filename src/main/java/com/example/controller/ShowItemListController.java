@@ -28,6 +28,12 @@ public class ShowItemListController {
     private ShowItemListService showItemListService;
 
 
+    /**
+     * 商品タイプに該当する商品を取得する.
+     *
+     * @param itemType 商品タイプ．top, set, bottom が有効
+     * @return 商品一覧
+     */
     @GetMapping("/{itemType}")
     public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType) {
         ItemTypeResponse response = new ItemTypeResponse();
