@@ -10,9 +10,30 @@ public class RegisterUserRequest {
 
     private String zipcode;
 
+    private String prefecture;
+
+    private String municipalities;
+
     private String address;
 
     private String telephone;
+
+
+    public String getPrefecture() {
+        return prefecture;
+    }
+
+    public void setPrefecture(String prefecture) {
+        this.prefecture = prefecture;
+    }
+
+    public String getMunicipalities() {
+        return municipalities;
+    }
+
+    public void setMunicipalities(String municipalities) {
+        this.municipalities = municipalities;
+    }
 
     public String getName() {
         return name;
@@ -69,6 +90,8 @@ public class RegisterUserRequest {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", zipcode='" + zipcode + '\'' +
+                ", prefecture='" + prefecture + '\'' +
+                ", municipalities='" + municipalities + '\'' +
                 ", address='" + address + '\'' +
                 ", telephone='" + telephone + '\'' +
                 '}';

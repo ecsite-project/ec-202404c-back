@@ -1,6 +1,7 @@
 package com.example.repository;
 
 import com.example.domain.Item;
+import com.example.response.ItemDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,15 +23,21 @@ public class ItemRepository {
     /*
     drop table if exists items cascade;
 
-    create table items (
-      id integer primary key
-      ,top_id integer not null
-      ,bottom_id integer not null
-      , name text not null
-      , description text not null
-      , price integer not null
-      , image_path text not null
-    ) ;
+    CREATE TABLE Items (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        price INTEGER NOT NULL CHECK (price >= 0),
+        item_type VARCHAR(50) NOT NULL CHECK (item_type IN ('top', 'bottom', 'set')),
+    image_path TEXT
+    );
+
+    CREATE TABLE Sets (
+        id SERIAL PRIMARY KEY,
+        item_id  INTEGER NOT NULL REFERENCES Items(id),
+        top_id INTEGER NOT NULL REFERENCES Items(id),
+        bottom_id INTEGER NOT NULL REFERENCES Items(id)
+    );
 
      */
 
@@ -40,15 +47,25 @@ public class ItemRepository {
     private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
         Item item = new Item();
         item.setId(rs.getInt("id"));
-        item.setId(rs.getInt("top_id"));
-        item.setId(rs.getInt("bottom_id"));
         item.setName(rs.getString("name"));
         item.setDescription(rs.getString("description"));
         item.setPrice(rs.getInt("price"));
-        item.setImagePath(rs.getString("imagePath"));
+        item.setItemType(rs.getString("item_type"));
+        item.setImagePath(rs.getString("image_path"));
         return item;
+    };
 
-
+    private static final RowMapper<ItemDetailResponse> ITEM_DETAIL_RESPONSE_ROW_MAPPER = (rs, i) -> {
+        ItemDetailResponse itemDetail = new ItemDetailResponse();
+        itemDetail.setId(rs.getInt("id"));
+        itemDetail.setName(rs.getString("name"));
+        itemDetail.setDescription(rs.getString("description"));
+        itemDetail.setPrice(rs.getInt("price"));
+        itemDetail.setItemType(rs.getString("item_type"));
+        itemDetail.setImagePath(rs.getString("image_path"));
+        itemDetail.setTopId(rs.getInt("top_id"));
+        itemDetail.setBottomId(rs.getInt("bottom_id"));
+        return itemDetail;
     };
 
     /**
@@ -57,9 +74,12 @@ public class ItemRepository {
      * @return 商品一覧
      */
     public List<Item> findAll() {
-        String sql = "SELECT id,top_id,bottom_id,name,description,price,imagePath FROM items ORDER BY id;";
-        List<Item> itemList = template.query(sql,ITEM_ROW_MAPPER);
-        return itemList;
+        String sql = """
+            SELECT id, name, description, price, item_type, image_path 
+            FROM items 
+            ORDER BY id;
+            """;
+        return template.query(sql, ITEM_ROW_MAPPER);
     }
 
     /**
@@ -69,11 +89,61 @@ public class ItemRepository {
      * @return 検索された商品の情報一覧
      */
     public List<Item> searchByNameContaining(String name) {
-        String sql = "SELECT id,top_id,bottom_id,name,description,price,imagePath FROM items WHERE name LIKE :name ORDER BY id;";
+        String sql = """
+            SELECT id, name, description, price, item_type, image_path 
+            FROM items 
+            WHERE name LIKE :name 
+            ORDER BY id;
+            """;
         SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+        return template.query(sql, param, ITEM_ROW_MAPPER);
+    }
 
-        List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
-        return itemList;
+    /**
+     * 商品タイプから商品を検索します.
+     *
+     * @param itemType 商品タイプ
+     * @return 検索された商品の情報一覧
+     */
+    public List<Item> findByType(String itemType) {
+        String sql = """
+            SELECT id, name, description, price, item_type, image_path 
+            FROM items 
+            WHERE item_type = :itemType 
+            ORDER BY id;
+            """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("itemType", itemType);
+        return template.query(sql, param, ITEM_ROW_MAPPER);
+    }
+
+    /**
+     *
+     * @param itemId 検索するItem
+     * @return 検索結果
+     */
+    public ItemDetailResponse findById(Integer itemId) {
+        String sql = """
+            SELECT 
+                i.id, 
+                i.name, 
+                i.description, 
+                i.price, 
+                i.item_type, 
+                i.image_path,
+                s.top_id,
+                s.bottom_id 
+            FROM 
+                Items as i
+            LEFT OUTER JOIN 
+                Sets as s 
+            ON 
+                i.id = s.item_id
+            WHERE 
+                i.id = :id
+            """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", itemId);
+        return template.queryForObject(sql, param, ITEM_DETAIL_RESPONSE_ROW_MAPPER);
     }
 
 }

@@ -1,13 +1,29 @@
 package com.example.domain;
 
+/**
+ * セット商品を表すエンティティクラス。
+ */
 public class Set {
+
+    /**
+     * セット商品のID。
+     */
     private Integer id;
+
+    /**
+     * セットに含まれるアイテムのID。
+     */
+    private Integer itemId;
+
+    /**
+     * セットのトップアイテムのID。
+     */
     private Integer topId;
+
+    /**
+     * セットのボトムアイテムのID。
+     */
     private Integer bottomId;
-    private String name;
-    private String description;
-    private Integer price;
-    private String imagePath;
 
     public Integer getId() {
         return id;
@@ -15,6 +31,14 @@ public class Set {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 
     public Integer getTopId() {
@@ -31,50 +55,5 @@ public class Set {
 
     public void setBottomId(Integer bottomId) {
         this.bottomId = bottomId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    @Override
-    public String toString() {
-        return "Set{" +
-                "id=" + id +
-                ", topId=" + topId +
-                ", bottomId=" + bottomId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
     }
 }
