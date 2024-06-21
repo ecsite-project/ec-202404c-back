@@ -234,7 +234,7 @@ public class OrderRepository {
         template.update(sql, param);
     
     }
-
+    /*
      * 注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
      *
