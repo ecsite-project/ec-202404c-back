@@ -4,6 +4,11 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * 注文情報のドメイン.
+ *
+ * @author io.yamanaka
+ */
 public class Order {
 
     /**

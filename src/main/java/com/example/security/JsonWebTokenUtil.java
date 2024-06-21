@@ -10,7 +10,7 @@ import java.util.Date;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 
-gutimport com.example.domain.LoginUser;
+import com.example.domain.LoginUser;
 import com.example.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
