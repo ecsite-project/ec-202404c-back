@@ -1,0 +1,132 @@
+package com.example.request;
+
+import java.sql.Date;
+
+public class OrderRequest {
+    private Integer id;
+    private Integer orderId;
+    private Integer userId;
+    private Integer paymentMethodId;
+    private java.sql.Date deliveryDate;
+    private String destinationName;
+    private String destinationEmail;
+    private String zipcode;
+    private String prefecture;
+    private String municipalities;
+    private String address;
+    private String telephone;
+
+    @Override
+    public String toString() {
+        return "OrderRequest{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", userId=" + userId +
+                ", paymentMethodId=" + paymentMethodId +
+                ", deliveryDate=" + deliveryDate +
+                ", destinationName='" + destinationName + '\'' +
+                ", destinationEmail='" + destinationEmail + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", prefecture='" + prefecture + '\'' +
+                ", municipalities='" + municipalities + '\'' +
+                ", address='" + address + '\'' +
+                ", telephone='" + telephone + '\'' +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getPaymentMethodId() {
+        return paymentMethodId;
+    }
+
+    public void setPaymentMethodId(Integer paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getDestinationName() {
+        return destinationName;
+    }
+
+    public void setDestinationName(String destinationName) {
+        this.destinationName = destinationName;
+    }
+
+    public String getDestinationEmail() {
+        return destinationEmail;
+    }
+
+    public void setDestinationEmail(String destinationEmail) {
+        this.destinationEmail = destinationEmail;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getPrefecture() {
+        return prefecture;
+    }
+
+    public void setPrefecture(String prefecture) {
+        this.prefecture = prefecture;
+    }
+
+    public String getMunicipalities() {
+        return municipalities;
+    }
+
+    public void setMunicipalities(String municipalities) {
+        this.municipalities = municipalities;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+}
