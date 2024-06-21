@@ -56,12 +56,12 @@ public class UserRepository {
     }
 
     /**
-     * メールアドレスとパスワードから管理者情報を取得します.
+     * メールアドレスとパスワードからユーザ情報を取得します.
      * 一件も存在しない場合にはnullを返します。
      *
      * @param email メールアドレス
      * @param password    パスワード
-     * @return 管理者情報
+     * @return ユーザ情報
      */
     public User findByEmailAndPassword(String email, String password) {
         String sql = "SELECT id,name,email,password,zipcode,prefecture,municipalities,address,telephone from users WHERE email=:email AND password =:password;";
@@ -72,6 +72,25 @@ public class UserRepository {
             return null;
         }
         return userList.get(0);
+
+    }
+
+    /**
+     * メールアドレスからユーザ情報を取得します.
+     * 一件も存在しない場合にはnullを返します。
+     *
+     * @param email メールアドレス
+     * @return ユーザ情報
+     */
+    public User findByEmail(String email) {
+        String sql = "SELECT id,name,email,password,zipcode,prefecture,municipalities,address,telephone from users WHERE email=:email";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+        User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+
+        if (user == null) {
+            return null;
+        }
+        return user;
 
     }
 

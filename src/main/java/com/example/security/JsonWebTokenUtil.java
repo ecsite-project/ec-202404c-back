@@ -45,14 +45,22 @@ public class JsonWebTokenUtil {
      * @param id ID
      * @return 認証トークン=JWT（JSON Web Token）
      */
-    public String generateToken(String id) {
+    public String generateToken(String id, String username) {
         LocalDateTime localDateTime = LocalDateTime.now();
         localDateTime = localDateTime.plusHours(SecurityConstants.EXPIRATION_HOUR); // 有効期限は8時間に設定
         Date expirationDate = toDate(localDateTime); // 有効期限
 
-        return Jwts.builder().setSubject(id).setExpiration(expirationDate)
-                .signWith(Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8))).compact();
+        return Jwts.builder()
+                .setSubject(id)
+                .claim("username", username) // usernameをトークンに追加
+                .claim("userid", id) // useridをトークンに追加
+                .setExpiration(expirationDate)
+                .signWith(Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8)))
+                .compact();
     }
+
+
+
 
     /**
      * 認証トークン=JWT（JSON Web Token）の解析しIDを返します.<br>
