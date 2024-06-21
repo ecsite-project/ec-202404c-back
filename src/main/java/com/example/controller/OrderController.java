@@ -31,7 +31,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("")
-    public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
+    public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response, @RequestParam String email){
         Order order = new Order();
         Destination destination = new Destination();
         Address address = new Address();
@@ -45,6 +45,23 @@ public class OrderController {
         webApiResponseObject.setStatus("success");
         webApiResponseObject.setMessage("OK.");
         webApiResponseObject.setErrorCode("E-00");
+
+
+        // 以下にメールの主題、内容を入力
+        // textに注文者名や注文商品、サイズを入れたいため、@RequestParamで全て受け取る
+        String subject = "注文完了メール";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("").append("様").append("\n\n");
+        sb.append("ご注文ありがとうございます。\n");
+        sb.append("ご注文内容は以下の通りです。\n");
+        sb.append("注文商品：").append("").append("\n");
+        sb.append("お届け先：").append("").append("\n");
+        sb.append("お届け予定日時：").append("").append("\n\n");
+        sb.append("またのご利用をお待ちしております。");
+
+        String text = sb.toString();
+        emailService.sendSimpleMessage(email, subject, text);
 
         return webApiResponseObject;
     }
