@@ -55,7 +55,7 @@ public class OrderRepository {
                 }
 
                 int orderItemId = rs.getInt("order_item_id");
-                if (!orderItemMap.containsKey(orderItemId)) {
+                if (!orderItemMap.containsKey(orderItemId) && orderItemId != 0) {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setId(orderItemId);
                     orderItem.setOrderId(rs.getInt("order_id"));
@@ -144,28 +144,41 @@ public class OrderRepository {
     public Order findActiveOrderByUserId(Integer userId) {
         String sql = """
                 SELECT 
-                    id AS order_id, 
-                    user_id, 
-                    status_id, 
-                    total_price, 
-                    order_date, 
-                    payment_method_id, 
-                    delivery_date, 
-                    address_id
-                FROM 
-                    Orders o
-                WHERE 
-                    o.user_id = :userId AND o.status_id = 1
+                o.id AS order_id, 
+                o.user_id, 
+                o.status_id, 
+                o.total_price, 
+                o.order_date, 
+                o.payment_method_id, 
+                o.delivery_date, 
+                o.address_id,
+                oi.id AS order_item_id,
+                oi.item_id,
+                oi.quantity,
+                oi.size,
+                i.id AS item_id,
+                i.name AS item_name,
+                i.description AS item_description,
+                i.price AS item_price,
+                i.item_type AS item_item_type,
+                i.image_path AS item_image_path
+            FROM 
+                Orders o
+            LEFT JOIN 
+                OrderItems oi ON o.id = oi.order_id
+            LEFT JOIN 
+                Items i ON oi.item_id = i.id
+            WHERE 
+               o.user_id = :userId AND o.status_id = 1
                 """;
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-        List<Order> orders = template.query(sql, param, ORDER_ROW_MAPPER);
+        Order order = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
 
-        // リストから最初のオブジェクトを取得する例
-        if (!orders.isEmpty()) {
-            return orders.get(0); // リストの最初のオブジェクトを返す
+        if (order != null) {
+            return order;
         } else {
-            return null; // リストが空の場合はnullを返す
+            return null;
         }
     }
 
@@ -210,6 +223,18 @@ public class OrderRepository {
     }
 
     /**
+
+     * 指定したOrderItemを削除します。
+     *
+     * @param orderItemId 注文アイテムID
+     */
+    public void deleteOrderItem(Integer orderItemId) {
+        String sql = "DELETE FROM OrderItems WHERE id = :orderItemId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+        template.update(sql, param);
+    
+    }
+
      * 注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
      *
@@ -222,6 +247,7 @@ public class OrderRepository {
                 "payment_method_id = :paymentMethodId, " +
                 "delivery_date = :deliveryDate " +
                 "WHERE id = :id";
+
         template.update(sql, param);
     }
 }
