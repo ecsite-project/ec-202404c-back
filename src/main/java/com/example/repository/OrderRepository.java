@@ -79,6 +79,66 @@ public class OrderRepository {
         }
     };
 
+
+    /**
+     * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractorです。
+     */
+    private static final ResultSetExtractor<List<Order>> ORDER_LIST_RESULT_SET_EXTRACTOR = new ResultSetExtractor<List<Order>>() {
+        @Override
+        public List<Order> extractData(ResultSet rs) throws SQLException {
+            Map<Integer, Order> orderMap = new HashMap<>();
+            Map<Integer, Item> itemMap = new HashMap<>();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+
+                Order order = orderMap.get(orderId);
+                if (order == null) {
+                    order = new Order();
+                    order.setId(orderId);
+                    order.setUserId(rs.getInt("user_id"));
+                    order.setStatusId(rs.getInt("status_id"));
+                    order.setTotalPrice(rs.getInt("total_price"));
+                    order.setOrderDate(rs.getTimestamp("order_date"));
+                    order.setPaymentMethodId(rs.getInt("payment_method_id"));
+                    order.setDeliveryDate(rs.getDate("delivery_date"));
+                    order.setItemList(new ArrayList<>());
+                    orderMap.put(orderId, order);
+                }
+
+                int orderItemId = rs.getInt("order_item_id");
+                if (orderItemId > 0) {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setId(orderItemId);
+                    orderItem.setOrderId(orderId);
+                    orderItem.setQuantity(rs.getInt("quantity"));
+                    orderItem.setSize(rs.getString("size"));
+
+                    int itemId = rs.getInt("item_id");
+                    Item item = itemMap.get(itemId);
+                    if (item == null) {
+                        item = new Item();
+                        item.setId(itemId);
+                        item.setName(rs.getString("item_name"));
+                        item.setDescription(rs.getString("item_description"));
+                        item.setPrice(rs.getInt("item_price"));
+                        item.setItemType(rs.getString("item_item_type"));
+                        item.setImagePath(rs.getString("item_image_path"));
+                        itemMap.put(itemId, item);
+                    }
+                    orderItem.setItem(item);
+
+                    order.getItemList().add(orderItem);
+                }
+            }
+
+            return new ArrayList<>(orderMap.values());
+        }
+    };
+
+
+
+
     /**
      * ResultSetからOrderオブジェクトをマッピングするためのRowMapperです。
      */
@@ -133,6 +193,47 @@ public class OrderRepository {
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
         return template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+    }
+
+    /**
+     * 指定したユーザIDに対応するOrderオブジェクトを複数取得します。
+     *
+     * @param userId ユーザID
+     * @return 注文オブジェクトのリスト。
+     */
+    public List<Order> findByUserId(Integer userId) {
+        String sql = """
+            SELECT 
+                o.id AS order_id, 
+                o.user_id, 
+                o.status_id, 
+                o.total_price, 
+                o.order_date, 
+                o.payment_method_id, 
+                o.delivery_date, 
+                o.address_id,
+                oi.id AS order_item_id,
+                oi.item_id,
+                oi.quantity,
+                oi.size,
+                i.id AS item_id,
+                i.name AS item_name,
+                i.description AS item_description,
+                i.price AS item_price,
+                i.item_type AS item_item_type,
+                i.image_path AS item_image_path
+            FROM 
+                Orders o
+            LEFT JOIN 
+                OrderItems oi ON o.id = oi.order_id
+            LEFT JOIN 
+                Items i ON oi.item_id = i.id
+            WHERE 
+                o.user_id = :userId
+            """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+        return template.query(sql, param, ORDER_LIST_RESULT_SET_EXTRACTOR);
     }
 
     /**
