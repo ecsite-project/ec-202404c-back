@@ -11,7 +11,6 @@ import java.util.Date;
 //import javax.servlet.http.HttpServletResponse;
 
 import com.example.domain.LoginUser;
-import com.example.domain.LoginUser;
 import com.example.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,10 +53,13 @@ public class JsonWebTokenUtil {
         return Jwts.builder()
                 .setSubject(id)
                 .claim("username", username) // usernameをトークンに追加
+                .claim("userid", id) // useridをトークンに追加
                 .setExpiration(expirationDate)
                 .signWith(Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
+
+
 
 
     /**
