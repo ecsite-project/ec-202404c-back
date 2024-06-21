@@ -47,7 +47,7 @@ public class ResisterUserController {
         }
 
         registerUserService.registerUser(user);
-        return new ResponseEntity<>("ユーザ登録が成功しました。", HttpStatus.CREATED);
+        return new ResponseEntity<>("ユーザ登録がした。", HttpStatus.CREATED);
     }
 
 }
