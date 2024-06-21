@@ -53,10 +53,13 @@ public class JsonWebTokenUtil {
         return Jwts.builder()
                 .setSubject(id)
                 .claim("username", username) // usernameをトークンに追加
+                .claim("userid", id) // useridをトークンに追加
                 .setExpiration(expirationDate)
                 .signWith(Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
+
+
 
 
     /**
