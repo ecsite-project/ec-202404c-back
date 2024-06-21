@@ -217,7 +217,7 @@ public class OrderRepository {
     public void update(Order order) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(order);
         String sql = "UPDATE orders SET " +
-                "status_id = :paymentMethodId, " + // TODO paymentMethodIdとstatusIdは同じ値になる→支払方法増やしたらまずいかも
+                "status_id = :statusId, " + // TODO paymentMethodIdとstatusIdは同じ値になる→支払方法増やしたらまずいかも
                 "order_date = CURRENT_TIMESTAMP, " + // 今の日時
                 "payment_method_id = :paymentMethodId, " +
                 "delivery_date = :deliveryDate " +
