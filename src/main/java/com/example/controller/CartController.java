@@ -30,9 +30,20 @@ public class CartController {
      * @param orderId 注文id
      * @return 注文
      */
-    @GetMapping("/{orderId}")
-    public ResponseEntity<Order> showCart(@PathVariable("orderId") Integer orderId){
-        return new ResponseEntity<>(cartService.findById(orderId), HttpStatus.CREATED);
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<Order> showCartByOrder(@PathVariable("orderId") Integer orderId){
+        return new ResponseEntity<>(cartService.findById(orderId), HttpStatus.OK);
+    }
+
+    /**
+     * 該当する注文情報を表示する.
+     *
+     * @param userId ユーザid
+     * @return 注文
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Order> showCarByUser(@PathVariable("userId") Integer userId){
+        return new ResponseEntity<>(cartService.findByUserId(userId), HttpStatus.OK);
     }
 
     /**
@@ -48,7 +59,13 @@ public class CartController {
         return ResponseEntity.ok(cart);
     }
 
-    @PostMapping("/delete")
+    /**
+     * カートからorderItemを消去してカート情報を返す.
+     *
+     * @param request 削除したいorderItemのリクエスト
+     * @return 削除後のカート情報
+     */
+    @DeleteMapping("/delete")
     public ResponseEntity<Order> deleteItemFromCart(@RequestBody DeleteItemFromCartRequest request) {
         System.out.println(request);
         // サービスを利用して注文アイテムを削除し、アクティブな注文を取得する

@@ -20,10 +20,36 @@ public class CartService {
     private OrderRepository orderRepository;
 
 
+    /**
+     * orderIdから注文情報を取得する．
+     *
+     * @param orderId 注文id
+     * @return 注文情報
+     */
     public Order findById(Integer orderId) {
         return orderRepository.findById(orderId);
     }
 
+    /**
+     * userIdから注文情報を取得する．
+     *
+     * @param userId ユーザid
+     * @return 注文情報
+     */
+    public Order findByUserId(Integer userId) {
+        return orderRepository.findActiveOrderByUserId(userId);
+    }
+
+    /**
+     * カートに商品を追加する.
+     *
+     * @param userId ユーザid
+     * @param itemId 商品id
+     * @param itemType 商品属性
+     * @param quantity 数量
+     * @param size 大きさ
+     * @return 追加されたカート情報
+     */
     public Order addItemToCart(Integer userId, Integer itemId, String itemType, Integer quantity,String size) {
         Order order = orderRepository.findActiveOrderByUserId(userId);
         System.out.println(order);
