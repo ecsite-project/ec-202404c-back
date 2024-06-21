@@ -22,6 +22,11 @@ public class RegisterUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * ユーザを登録します。パスワードはハッシュ化されます。
+     *
+     * @param user 登録するユーザ情報
+     */
     public void registerUser(User user){
         // パスワードをハッシュ化
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -32,7 +37,7 @@ public class RegisterUserService {
      * 入力されたメールアドレスがDBと重複していないかをチェックする.
      *
      * @param email 調べたいメールアドレス
-     * @return 存在していればtrue,存在していなければfalse
+     * @return メールアドレスが存在していればtrue,存在していなければfalse
      */
     public boolean checkExistEmail(String email) {
         if (userRepository.findByMailAddress(email) == null) {

@@ -1,22 +1,54 @@
 package com.example.domain;
 
+/**
+ * ユーザ情報を表すドメイン.
+ *
+ * @author io.yamanaka
+ */
 public class User {
+    /**
+     * ユーザID
+     */
     private Integer id;
 
+    /**
+     * ユーザ名
+     */
     private String name;
 
+    /**
+     * メールアドレス
+     */
     private String email;
 
+    /**
+     * パスワード
+     */
     private String password;
 
+    /**
+     * 郵便番号
+     */
     private String zipcode;
 
+    /**
+     * 都道府県
+     */
     private String prefecture;
 
+    /**
+     * 市町村
+     */
     private String municipalities;
 
+    /**
+     * 住所
+     */
     private String address;
 
+    /**
+     * 電話番号
+     */
     private String telephone;
 
     public String getPrefecture() {

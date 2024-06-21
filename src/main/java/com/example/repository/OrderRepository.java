@@ -324,7 +324,6 @@ public class OrderRepository {
     }
 
     /**
-
      * 指定したOrderItemを削除します。
      *
      * @param orderItemId 注文アイテムID
@@ -336,6 +335,7 @@ public class OrderRepository {
     
     }
 
+    /**
      * 注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
      *
