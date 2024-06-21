@@ -336,7 +336,7 @@ public class OrderRepository {
     
     }
 
-     * 注文情報の更新を行います.
+     /* 注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
      *
      */

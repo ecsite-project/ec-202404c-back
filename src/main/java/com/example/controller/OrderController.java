@@ -44,6 +44,7 @@ public class OrderController {
         orderService.order(order, destination, address);
 
         // 成功情報をレスポンス
+        order.setId(orderRequest.getOrderId());
         WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
         webApiResponseObject.setStatus("success");
         webApiResponseObject.setMessage("OK.");

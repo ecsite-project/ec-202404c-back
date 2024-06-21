@@ -36,7 +36,8 @@ public class OrderService {
             order.setStatusId(2);
         }
         orderRepository.update(order);
+        Integer addressId =  addressRepository.insert(address);
+        destination.setAddressId(addressId);
         destinationRepository.insert(destination);
-        addressRepository.insert(address);
     }
 }
