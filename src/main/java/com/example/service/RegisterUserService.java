@@ -27,4 +27,18 @@ public class RegisterUserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.insert(user);
     }
+
+    /**
+     * 入力されたメールアドレスがDBと重複していないかをチェックする.
+     *
+     * @param email 調べたいメールアドレス
+     * @return 存在していればtrue,存在していなければfalse
+     */
+    public boolean checkExistEmail(String email) {
+        if (userRepository.findByMailAddress(email) == null) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.example.domain.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -224,6 +223,7 @@ public class OrderRepository {
     }
 
     /**
+
      * 指定したOrderItemを削除します。
      *
      * @param orderItemId 注文アイテムID
@@ -231,6 +231,23 @@ public class OrderRepository {
     public void deleteOrderItem(Integer orderItemId) {
         String sql = "DELETE FROM OrderItems WHERE id = :orderItemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+        template.update(sql, param);
+    
+    }
+
+     * 注文情報の更新を行います.
+     * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
+     *
+     */
+    public void update(Order order) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+        String sql = "UPDATE orders SET " +
+                "status_id = :statusId, " + // TODO paymentMethodIdとstatusIdは同じ値になる→支払方法増やしたらまずいかも
+                "order_date = CURRENT_TIMESTAMP, " + // 今の日時
+                "payment_method_id = :paymentMethodId, " +
+                "delivery_date = :deliveryDate " +
+                "WHERE id = :id";
+
         template.update(sql, param);
     }
 }
