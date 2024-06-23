@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -19,25 +17,10 @@ import java.util.List;
  *
  * @author haruka.yamaneki
  */
-
 @Repository
 public class UserRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
-
-    /*
-     create table users (
-     id serial primary key
-     , name varchar(100) not null
-     , email varchar(100) not null unique
-     , password text not null
-     , zipcode varchar(8) not null
-     , prefecture varchar(10) not null
-     , municipalities varchar(10) not null
-     , address varchar(20) not null
-     , telephone varchar(15) not null
-    ) ;
-     */
 
     /**
      * Userオブジェクトを作成するローマッパーです.
@@ -54,6 +37,7 @@ public class UserRepository {
         SqlParameterSource param = new BeanPropertySqlParameterSource(user);
         template.update(sql, param);
     }
+
 
     /**
      * メールアドレスとパスワードからユーザ情報を取得します.
@@ -72,8 +56,8 @@ public class UserRepository {
             return null;
         }
         return userList.get(0);
-
     }
+
 
     /**
      * メールアドレスからユーザ情報を取得します.
@@ -85,14 +69,9 @@ public class UserRepository {
     public User findByEmail(String email) {
         String sql = "SELECT id,name,email,password,zipcode,prefecture,municipalities,address,telephone from users WHERE email=:email";
         SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-        User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
-
-        if (user == null) {
-            return null;
-        }
-        return user;
-
+        return template.queryForObject(sql, param, USER_ROW_MAPPER);
     }
+
 
     /**
      * 主キー検索をする.
@@ -117,13 +96,9 @@ public class UserRepository {
         String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email;";
         SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
         List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
-        if (userList.size() == 0) {
+        if (userList.isEmpty()) {
             return null;
         }
         return userList.get(0);
     }
-
-
-
-
 }
