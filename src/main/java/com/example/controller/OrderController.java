@@ -34,7 +34,6 @@ public class OrderController {
 
     @PostMapping("")
     public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
-        System.out.println(orderRequest);
         Order order = new Order();
         Destination destination = new Destination();
         Address address = new Address();

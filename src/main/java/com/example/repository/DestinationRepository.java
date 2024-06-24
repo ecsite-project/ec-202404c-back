@@ -28,7 +28,7 @@ public class DestinationRepository {
                 ":orderId, " +
                 ":destinationName, " +
                 ":destinationEmail, " +
-                ":orderId) "; // orderIdとaddressIdは1対1で同じ値になる
+                ":addressId) "; // orderIdとaddressIdは1対1で同じ値になる
         template.update(sql, param);
     }
 }

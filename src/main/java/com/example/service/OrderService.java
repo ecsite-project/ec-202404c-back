@@ -35,11 +35,10 @@ public class OrderService {
         if (order.getPaymentMethodId() == 2){
             order.setStatusId(2);
         }
-        System.out.println(order);
         orderRepository.update(order);
         Integer addressId =  addressRepository.insert(address);
         destination.setAddressId(addressId);
-
+        System.out.println(destination);
         destinationRepository.insert(destination);
     }
 }
