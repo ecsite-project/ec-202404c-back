@@ -5,23 +5,20 @@ import com.example.domain.*;
 import com.example.request.OrderRequest;
 import com.example.service.EmailService;
 import com.example.service.OrderService;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-/**
- * 注文をするコントローラです.
- *
- * @author io.yamanaka
- */
-@EnableAsync
+
+
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 @RequestMapping("/order")
@@ -32,6 +29,28 @@ public class OrderController {
 
     @Autowired
     private EmailService emailService;
+
+    @Value("${credit-card-check-api}")
+    private String creditCardCheckApi;
+
+    @PostMapping("/card")
+    public ResponseEntity<WebApiResponseObject> cardOrder(@RequestBody OrderRequest orderRequest, HttpServletResponse response) {
+        CreditCard card = new CreditCard();
+        BeanUtils.copyProperties(orderRequest, card);
+
+        // ここで必要に応じてクレジットカードのバリデーションや他の処理を行う
+        // 外部のクレジットカードチェックAPIを呼び出す
+        RestTemplate restTemplate = new RestTemplate();
+        JsonNode jsonNode = restTemplate.postForObject(creditCardCheckApi, card, JsonNode.class);
+
+        // レスポンスの作成
+        WebApiResponseObject responseObject = new WebApiResponseObject();
+        responseObject.setStatus("success");
+        responseObject.setMessage("Card validation successful");
+        responseObject.setErrorCode("E-00");
+
+        return ResponseEntity.ok(responseObject);
+    }
 
     @PostMapping("")
     public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
@@ -57,6 +76,4 @@ public class OrderController {
 
         return webApiResponseObject;
     }
-
-
 }
