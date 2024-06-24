@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/item")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE })
 public class ShowItemDetailController {
 
     @Autowired

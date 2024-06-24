@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author haruka.yamaneki
  */
 @RestController
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 @RequestMapping("/users")
 public class ResisterUserController {
 

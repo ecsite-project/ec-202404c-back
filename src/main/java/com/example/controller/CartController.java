@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
  * @author reon.hatsuda
  */
 @RestController
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE })
 @RequestMapping("/cart")
 public class CartController {
 

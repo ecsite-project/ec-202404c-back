@@ -17,6 +17,8 @@ import java.util.List;
  * @author haruka.yamaneki
  */
 @RestController
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE })
 @RequestMapping("/items")
 public class ShowItemListController {
     @Autowired

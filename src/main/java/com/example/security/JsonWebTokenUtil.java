@@ -21,7 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -32,7 +31,6 @@ import org.springframework.stereotype.Component;
  * @author igamasayuki
  *
  */
-@Component
 public class JsonWebTokenUtil {
 
     @Autowired
@@ -116,7 +114,7 @@ public class JsonWebTokenUtil {
             // public String xxx(Model model
             //		, @AuthenticationPrincipal LoginUser loginUser) {
             SecurityContext context = SecurityContextHolder.createEmptyContext();
-            LoginUser principal = new LoginUser(userRepository.load(Integer.parseInt(userId)), Collections.emptyList());
+            LoginUser principal = new LoginUser(userRepository.load(Integer.parseInt(userId)), null);
             context.setAuthentication(new JWTAuthenticationToken(Collections.emptyList(), principal));
             SecurityContextHolder.setContext(context);
 
