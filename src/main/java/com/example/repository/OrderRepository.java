@@ -324,7 +324,6 @@ public class OrderRepository {
     }
 
     /**
-
      * 指定したOrderItemを削除します。
      *
      * @param orderItemId 注文アイテムID
