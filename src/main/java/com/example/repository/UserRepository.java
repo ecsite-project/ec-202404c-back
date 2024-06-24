@@ -71,7 +71,6 @@ public class UserRepository {
         return template.queryForObject(sql, param, USER_ROW_MAPPER);
     }
 
-
     /**
      * 主キー検索をします.
      *

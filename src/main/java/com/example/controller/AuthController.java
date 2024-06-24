@@ -43,8 +43,6 @@ public class AuthController {
     /**
      * ログインを行います.
      * @param request
-     * @param result
-     * @param model
      * @param response
      * @return webApiResponseObject
      */
