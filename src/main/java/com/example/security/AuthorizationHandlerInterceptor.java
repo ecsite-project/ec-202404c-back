@@ -46,7 +46,6 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
             // 付与されている場合は認可処理を実行
             JsonWebTokenUtil jsonWebTokenUtil = new JsonWebTokenUtil();
             boolean isAuthorizaOK = jsonWebTokenUtil.authorize(request, response);
-            System.out.println("認可する：" + isAuthorizaOK);
 
             if (!isAuthorizaOK) {
                 // 有効期限切れなどの認可が許されない場合はException

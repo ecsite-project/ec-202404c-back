@@ -47,6 +47,21 @@ public class ItemDetailResponse {
      */
     private Integer bottomId;
 
+    /**
+     * セットのトップアイテムの画像パス。
+     */
+    private String topImagePath;
+
+    /**
+     * セットのボトムアイテムの画像パス。
+     */
+    private String bottomImagePath;
+
+    /**
+     * 現在登録しているユーザがお気に入り登録しているか。
+     */
+    private boolean isFavorite;
+
     public Integer getId() {
         return id;
     }
@@ -111,9 +126,33 @@ public class ItemDetailResponse {
         this.bottomId = bottomId;
     }
 
+    public String getTopImagePath() {
+        return topImagePath;
+    }
+
+    public void setTopImagePath(String topImagePath) {
+        this.topImagePath = topImagePath;
+    }
+
+    public String getBottomImagePath() {
+        return bottomImagePath;
+    }
+
+    public void setBottomImagePath(String bottomImagePath) {
+        this.bottomImagePath = bottomImagePath;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     @Override
     public String toString() {
-        return "ItemDetail{" +
+        return "ItemDetailResponse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -122,6 +161,9 @@ public class ItemDetailResponse {
                 ", imagePath='" + imagePath + '\'' +
                 ", topId=" + topId +
                 ", bottomId=" + bottomId +
+                ", topImagePath='" + topImagePath + '\'' +
+                ", bottomImagePath='" + bottomImagePath + '\'' +
+                ", isFavorite=" + isFavorite +
                 '}';
     }
 }
