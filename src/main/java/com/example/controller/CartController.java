@@ -67,10 +67,8 @@ public class CartController {
      */
     @DeleteMapping("/delete")
     public ResponseEntity<Order> deleteItemFromCart(@RequestBody DeleteItemFromCartRequest request) {
-        System.out.println(request);
         // サービスを利用して注文アイテムを削除し、アクティブな注文を取得する
         Order cart = cartService.deleteOrderItem(request.getOrderItemId(), request.getUserId());
-
         return ResponseEntity.ok(cart);
     }
 }

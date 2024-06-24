@@ -21,6 +21,13 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * ログイン情報が正しいかをチェックする.
+     *
+     * @param email メールアドレス
+     * @param password パスワード
+     * @return ログイン成功の場合はUserオブジェクト,失敗の場合はnull
+     */
     public User login(String email, String password){
         User user = userRepository.findByEmail(email);
         // 対象のユーザがいない場合はnullを返す

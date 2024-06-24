@@ -23,7 +23,7 @@ public class UserRepository {
     private NamedParameterJdbcTemplate template;
 
     /**
-     * Userオブジェクトを作成するローマッパーです.
+     * Userオブジェクトを作成するローマッパー.
      */
     private static final RowMapper<User> USER_ROW_MAPPER = new BeanPropertyRowMapper<>(User.class);
 
@@ -44,7 +44,7 @@ public class UserRepository {
      * 一件も存在しない場合にはnullを返します。
      *
      * @param email メールアドレス
-     * @param password    パスワード
+     * @param password パスワード
      * @return ユーザ情報
      */
     public User findByEmailAndPassword(String email, String password) {
@@ -61,7 +61,6 @@ public class UserRepository {
 
     /**
      * メールアドレスからユーザ情報を取得します.
-     * 一件も存在しない場合にはnullを返します。
      *
      * @param email メールアドレス
      * @return ユーザ情報
@@ -74,7 +73,7 @@ public class UserRepository {
 
 
     /**
-     * 主キー検索をする.
+     * 主キー検索をします.
      *
      * @param id ID
      * @return ユーザー情報

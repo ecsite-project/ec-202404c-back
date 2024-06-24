@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 商品詳細一覧を表示するコントローラです.
+ *
+ * @author reon.hatsuda
  */
 @RestController
 @RequestMapping("/item")

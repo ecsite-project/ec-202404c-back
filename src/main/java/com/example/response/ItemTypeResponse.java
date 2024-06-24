@@ -4,6 +4,11 @@ import com.example.domain.Item;
 
 import java.util.*;
 
+/**
+ * 商品タイプを返すレスポンスクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class ItemTypeResponse {
     private List<Item> items;
 

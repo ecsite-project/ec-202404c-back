@@ -21,6 +21,7 @@ public class AddressRepository {
     /**
      * 注文の宛先情報の更新を行います.
      *
+     * @param address 住所情報
      */
     public void insert(Address address) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(address);

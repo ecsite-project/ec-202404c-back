@@ -1,5 +1,10 @@
 package com.example.domain;
 
+/**
+ * 注文商品のドメイン.
+ *
+ * @author io.yamanaka
+ */
 public class OrderItem {
 
     /**
