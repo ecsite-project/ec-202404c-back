@@ -29,9 +29,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/auth")
-//CrossOrigin対応(異なるサーバーからの呼び出しを許可)
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-        RequestMethod.DELETE })
 public class AuthController {
 
     @Autowired
