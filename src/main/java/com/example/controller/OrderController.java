@@ -59,7 +59,7 @@ public class OrderController {
         return webApiResponseObject;
     }
 
-    @Async
+    @Async("taskExecutor")
     public void sendOrderConfirmationEmail(Destination destination, Address address, Order order) {
         String subject = "注文完了メール";
         StringBuilder sb = new StringBuilder();
