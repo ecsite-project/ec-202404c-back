@@ -12,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 注文をするコントローラです.
@@ -52,14 +50,13 @@ public class OrderController {
 
         // 以下にメールの主題、内容を入力
         // textに注文者名や注文商品、サイズを入れたいため、@RequestParamで全て受け取る
-
         String subject = "注文完了メール";
         StringBuilder sb = new StringBuilder();
 
         // メールに記載するため、注文情報を取得
         Order orderInfo = emailService.getOrderInfo(order.getId());
 
-        // TODO メールの名前はユーザ名？それとも注文フォームの名前？
+        // メールの名前は注文フォームで入力された名前
         sb.append(destination.getDestinationName()).append("様").append("\n\n");
         sb.append("ご注文ありがとうございます。\n");
         sb.append("ご注文内容は以下の通りです。\n\n");
@@ -73,7 +70,7 @@ public class OrderController {
             sb.append("　　1点当たりの価格：").append(item.getItem().getPrice()).append("円").append("\n");
         }
         sb.append("\n");
-        sb.append("お届け先：").append(address.getPrefecture() + " "+ address.getMunicipalities() + " "+ address.getAddress()).append("\n");
+        sb.append("お届け先：").append(address.getPrefecture()).append(" ").append(address.getMunicipalities()).append(" ").append(address.getAddress()).append("\n");
         sb.append("お届け予定日時：").append(order.getDeliveryDate()).append("\n");
         sb.append("===============================\n\n");
         sb.append("またのご利用をお待ちしております。");
