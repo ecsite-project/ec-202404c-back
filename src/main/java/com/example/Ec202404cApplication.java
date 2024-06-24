@@ -5,9 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
+@EnableAsync
 @SpringBootApplication
 public class Ec202404cApplication {
 
@@ -30,5 +34,14 @@ public class Ec202404cApplication {
 		props.put("mail.debug", "true");
 
 		return mailSender;
+	}
+
+	@Bean("taskExecutor")
+	public Executor taskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(10);
+		executor.setThreadNamePrefix("TaskThread-");
+		executor.initialize();
+		return executor;
 	}
 }
