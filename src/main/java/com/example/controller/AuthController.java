@@ -11,6 +11,8 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +50,7 @@ public class AuthController {
      */
     @NonAuthorize // 認可しない
     @PostMapping("/login")
-    public WebApiResponseObject login(@RequestBody LoginRequest request, BindingResult result, Model model,
-                                      HttpServletResponse response) {
+    public ResponseEntity<WebApiResponseObject> login(@RequestBody LoginRequest request, HttpServletResponse response) {
         WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
         Map<String, Object> responseMap = new HashMap<>();
 
@@ -60,7 +61,7 @@ public class AuthController {
             webApiResponseObject.setMessage("メールアドレス、またはパスワードが間違っています。");
             webApiResponseObject.setErrorCode("E-01");
             System.out.println("WebApiResponseMessage:" + webApiResponseObject);
-            return webApiResponseObject;
+            return new ResponseEntity<>(webApiResponseObject, HttpStatus.UNAUTHORIZED);
         }
         // 成功情報をレスポンス
         webApiResponseObject.setStatus("success");
@@ -68,12 +69,11 @@ public class AuthController {
         webApiResponseObject.setErrorCode("E-00");
         responseMap.put("user", user);
         webApiResponseObject.setResponseMap(responseMap);
-        System.out.println(webApiResponseObject);
 
         // 認証トークンを発行してレスポンスに詰めます
         createAndResponseAccessToken(user, response);
 
-        return webApiResponseObject;
+        return new ResponseEntity<>(webApiResponseObject, HttpStatus.OK);
     }
 
     /**

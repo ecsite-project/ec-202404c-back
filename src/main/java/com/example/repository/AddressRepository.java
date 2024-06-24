@@ -3,8 +3,11 @@ package com.example.repository;
 import com.example.domain.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,8 +26,8 @@ public class AddressRepository {
      *
      * @param address 住所情報
      */
-    public void insert(Address address) {
-        SqlParameterSource param = new BeanPropertySqlParameterSource(address);
+    public Integer insert(Address address) {
+
         String sql = "INSERT INTO addresses (user_id, zipcode, prefecture, municipalities, address, telephone) VALUES ( " +
                 ":userId, " +
                 ":zipcode, " +
@@ -33,6 +36,11 @@ public class AddressRepository {
                 ":address, " +
                 ":telephone" +
                 ")";
-        template.update(sql, param);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource param = new BeanPropertySqlParameterSource(address);
+        template.update(sql, param, keyHolder, new String[]{"id"});
+        return keyHolder.getKey().intValue();
     }
 }
+
