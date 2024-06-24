@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.domain.Order;
-import com.example.domain.User;
 import com.example.request.AddItemToCartRequest;
 import com.example.request.DeleteItemFromCartRequest;
 import com.example.service.CartService;

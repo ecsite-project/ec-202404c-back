@@ -22,7 +22,7 @@ public class ShowItemDetailService {
      * idによって情報を取得する.
      *
      * @param itemId　商品id
-     * @return　商品詳細
+     * @return 商品詳細
      */
     public ItemDetailResponse getItemDetail(Integer itemId){
         return itemRepository.findById(itemId);

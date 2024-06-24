@@ -14,9 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 注文をするコントローラです.
@@ -52,8 +50,11 @@ public class OrderController {
         webApiResponseObject.setStatus("success");
         webApiResponseObject.setMessage("OK.");
         webApiResponseObject.setErrorCode("E-00");
+
         // メール送信を非同期で行う
         emailService.sendOrderConfirmationEmail(destination, address, order);
+
+
         return webApiResponseObject;
     }
 
