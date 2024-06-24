@@ -1,8 +1,14 @@
 package com.example.request;
 
+/**
+ * ログイン用のリクエストを表すクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class LoginRequest {
+    /** メールアドレス */
     private String email;
-
+    /** パスワード */
     private String password;
 
     public String getPassword() {

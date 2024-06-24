@@ -1,5 +1,10 @@
 package com.example.response;
 
+/**
+ * 商品詳細を返すレスポンスクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class ItemDetailResponse {
 
     /**

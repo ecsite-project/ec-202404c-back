@@ -24,6 +24,7 @@ public class AddressRepository {
     /**
      * 注文の宛先情報の更新を行います.
      *
+     * @param address 住所情報
      */
     public Integer insert(Address address) {
 

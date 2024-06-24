@@ -1,7 +1,9 @@
 package com.example.domain;
 
 /**
- * セット商品を表すエンティティクラス。
+ * セット商品を表すドメイン.
+ *
+ * @author io.yamanaka
  */
 public class Set {
 
