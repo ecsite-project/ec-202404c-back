@@ -28,6 +28,13 @@ public class OrderService {
     @Autowired
     private AddressRepository addressRepository;
 
+    /**
+     * 注文をする.
+     *
+     * @param order 注文情報
+     * @param destination 宛先情報
+     * @param address 宛先の住所情報
+     */
     public void order(Order order, Destination destination, Address address){
         if (order.getPaymentMethodId() == 1){
             order.setStatusId(1);

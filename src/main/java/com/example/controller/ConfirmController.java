@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * @author io.yamanaka
  */
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-        RequestMethod.DELETE })
 @RequestMapping("")
 public class ConfirmController {
     @Autowired
@@ -25,7 +23,7 @@ public class ConfirmController {
      * 注文確認画面を表示する.
      *
      * @param orderIdRequest 注文id
-     * @return 注文
+     * @return 注文IDに対応したOrderオブジェクト
      */
     @PostMapping("/confirm")
     public ResponseEntity<Order> showConfirm(@RequestBody OrderIdRequest orderIdRequest){
