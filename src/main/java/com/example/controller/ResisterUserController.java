@@ -24,23 +24,6 @@ public class ResisterUserController {
     private RegisterUserService registerUserService;
 
     /**
-     * デフォルトのユーザ情報を取得します。
-     *
-     * @param user 仮のユーザオブジェクト
-     * @return ユーザ情報を含むレスポンスエンティティ
-     */
-    @GetMapping
-    public ResponseEntity<User> showUser(User user){
-        user.setName("John Doe");
-        user.setEmail("john.doe@example.com");
-        user.setPassword("password123");
-        user.setZipcode("12345");
-        user.setAddress("123 Main St");
-        user.setTelephone("123-456-7890");
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
-    /**
      * 新規ユーザを登録します。
      *
      * @param registerUserRequest 登録するユーザのリクエストオブジェクト
