@@ -1,9 +1,14 @@
 package com.example.request;
 
+/**
+ * カートから商品を削除するためのリクエストを表すクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class DeleteItemFromCartRequest {
-
+    /**　注文アイテムID */
     private Integer orderItemId;
-
+    /**　ユーザID */
     private Integer userId;
 
     public Integer getOrderItemId() {

@@ -1,6 +1,12 @@
 package com.example.request;
 
+/**
+ * ユーザIDリクエストを表すクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class UserIdRequest {
+    /** ユーザID */
     private Integer userId;
 
     @Override

@@ -1,14 +1,21 @@
 package com.example.request;
 
+/**
+ * カートから商品を追加するためのリクエストを表すクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class AddItemToCartRequest {
-
+    /**　ユーザID */
     private Integer userId;
+    /**　アイテムID */
     private Integer itemId;
+    /**　アイテムの種類 */
     private String itemType;
+    /**　数量 */
     private Integer quantity;
+    /**　サイズ */
     private String size;
-
-    // ゲッターとセッター
 
     public Integer getUserId() {
         return userId;

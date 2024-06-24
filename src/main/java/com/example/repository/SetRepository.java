@@ -9,17 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Setsテーブルを操作するリポジトリです.
+ *
+ * @author io.yamanaka
+ */
 @Repository
 public class SetRepository {
-
-    /*
-    CREATE TABLE Sets (
-        id SERIAL PRIMARY KEY,
-        item_id  INTEGER NOT NULL REFERENCES Items(id),
-        top_id INTEGER NOT NULL REFERENCES Items(id),
-        bottom_id INTEGER NOT NULL REFERENCES Items(id)
-    );
-     */
 
     @Autowired
     private NamedParameterJdbcTemplate template;
@@ -35,7 +31,6 @@ public class SetRepository {
         set.setBottomId(rs.getInt("bottom_id"));
         return set;
     };
-
 
     /**
      * Setの一覧表示を行います.

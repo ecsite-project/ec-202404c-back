@@ -16,34 +16,15 @@ import java.util.List;
  *
  * @author haruka.yamaneki
  */
-
 @Repository
 public class ItemRepository {
-
-    /*
-    drop table if exists items cascade;
-
-    CREATE TABLE Items (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        description TEXT,
-        price INTEGER NOT NULL CHECK (price >= 0),
-        item_type VARCHAR(50) NOT NULL CHECK (item_type IN ('top', 'bottom', 'set')),
-    image_path TEXT
-    );
-
-    CREATE TABLE Sets (
-        id SERIAL PRIMARY KEY,
-        item_id  INTEGER NOT NULL REFERENCES Items(id),
-        top_id INTEGER NOT NULL REFERENCES Items(id),
-        bottom_id INTEGER NOT NULL REFERENCES Items(id)
-    );
-
-     */
 
     @Autowired
     private NamedParameterJdbcTemplate template;
 
+    /**
+     * Itemオブジェクトを生成するローマッパー.
+     */
     private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
         Item item = new Item();
         item.setId(rs.getInt("id"));
@@ -55,6 +36,9 @@ public class ItemRepository {
         return item;
     };
 
+    /**
+     * ItemDetailResponseオブジェクトを生成するローマッパー.
+     */
     private static final RowMapper<ItemDetailResponse> ITEM_DETAIL_RESPONSE_ROW_MAPPER = (rs, i) -> {
         ItemDetailResponse itemDetail = new ItemDetailResponse();
         itemDetail.setId(rs.getInt("id"));
@@ -117,6 +101,7 @@ public class ItemRepository {
     }
 
     /**
+     * 指定したアイテムIDに対応するItemDetailResponseオブジェクトを取得します。
      *
      * @param itemId 検索するItem
      * @return 検索結果
@@ -145,5 +130,4 @@ public class ItemRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", itemId);
         return template.queryForObject(sql, param, ITEM_DETAIL_RESPONSE_ROW_MAPPER);
     }
-
 }

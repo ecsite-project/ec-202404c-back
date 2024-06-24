@@ -40,14 +40,13 @@ public class AuthController {
     @Autowired
     private JwtBlacklistService jwtBlacklistService;
 
-
     /**
      * ログインを行います.
      * @param request
      * @param result
      * @param model
      * @param response
-     * @return
+     * @return webApiResponseObject
      */
     @NonAuthorize // 認可しない
     @PostMapping("/login")
@@ -72,7 +71,6 @@ public class AuthController {
         webApiResponseObject.setResponseMap(responseMap);
 
         // 認証トークンを発行してレスポンスに詰めます
-
         createAndResponseAccessToken(user, response);
 
         return new ResponseEntity<>(webApiResponseObject, HttpStatus.OK);
@@ -116,7 +114,7 @@ public class AuthController {
         return webApiResponseObject;
     }
 
-    /*
+    /**
      * 認証トークンを発行してレスポンスに詰めます.
      *
      * @param user ログイン成功したユーザ情報
@@ -137,9 +135,5 @@ public class AuthController {
         response.addHeader("user_id", user.getId().toString());
         response.addHeader("username", user.getName());
     }
-
-
-
-
 }
 

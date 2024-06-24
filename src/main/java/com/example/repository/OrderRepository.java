@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 注文（Order）に関するデータアクセスを行うリポジトリクラスです.
+ * Ordersテーブルを操作するリポジトリです.
  *
  * @author reon.hatsuda
  */
@@ -33,7 +33,7 @@ public class OrderRepository {
     private NamedParameterJdbcTemplate template;
 
     /**
-     * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractorです。
+     * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractor.
      */
     private static final ResultSetExtractor<Order> ORDER_RESULT_SET_EXTRACTOR = new ResultSetExtractor<Order>() {
         @Override
@@ -81,7 +81,7 @@ public class OrderRepository {
 
 
     /**
-     * ResultSetからOrderオブジェクトを抽出するためのResultSetExtractorです。
+     * ResultSetからOrderオブジェクトを抽出してリストに格納するためのResultSetExtractor.
      */
     private static final ResultSetExtractor<List<Order>> ORDER_LIST_RESULT_SET_EXTRACTOR = new ResultSetExtractor<List<Order>>() {
         @Override
@@ -137,8 +137,6 @@ public class OrderRepository {
     };
 
 
-
-
     /**
      * ResultSetからOrderオブジェクトをマッピングするためのRowMapperです。
      */
@@ -158,7 +156,7 @@ public class OrderRepository {
      * 指定した注文IDに対応するOrderオブジェクトを取得します。
      *
      * @param orderId 注文ID
-     * @return 注文オブジェクト。見つからない場合はnull。
+     * @return 注文オブジェクト
      */
     public Order findById(Integer orderId) {
         String sql = """
@@ -204,13 +202,13 @@ public class OrderRepository {
     public List<Order> findByUserId(Integer userId) {
         String sql = """
             SELECT 
-                o.id AS order_id, 
-                o.user_id, 
-                o.status_id, 
-                o.total_price, 
-                o.order_date, 
-                o.payment_method_id, 
-                o.delivery_date, 
+                o.id AS order_id,
+                o.user_id,
+                o.status_id,
+                o.total_price,
+                o.order_date,
+                o.payment_method_id,
+                o.delivery_date,
                 o.address_id,
                 oi.id AS order_item_id,
                 oi.item_id,
@@ -336,15 +334,17 @@ public class OrderRepository {
     }
 
 
+
      /* 
      *注文情報の更新を行います.
      * paymentMethodが1だったらstatusを1に、paymentMethodが2だったらstatusを2にする
      *
+     * @param order 注文情報
      */
     public void update(Order order) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(order);
         String sql = "UPDATE orders SET " +
-                "status_id = :statusId, " + // TODO paymentMethodIdとstatusIdは同じ値になる→支払方法増やしたらまずいかも
+                "status_id = :statusId, " +
                 "order_date = CURRENT_TIMESTAMP, " + // 今の日時
                 "payment_method_id = :paymentMethodId, " +
                 "delivery_date = :deliveryDate " +
