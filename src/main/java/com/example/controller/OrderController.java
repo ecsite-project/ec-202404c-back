@@ -22,7 +22,6 @@ import java.util.Map;
  * @author io.yamanaka
  */
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 @RequestMapping("/order")
 public class OrderController {
 
