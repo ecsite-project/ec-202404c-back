@@ -1,8 +1,8 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/EC
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/ec
+    username: neki_haruka
     password: postgres
   jmx:
     default-domain: ec-202404c
@@ -31,3 +31,5 @@ server:
       force: true
 
 credit-card-check-api: http://153.127.48.168:8080/sample-credit-card-web-api/credit-card/payment
+allowedOrigins:
+  - "http://localhost:8080"
