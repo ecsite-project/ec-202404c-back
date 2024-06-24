@@ -34,13 +34,14 @@ public class OrderController {
 
     @PostMapping("")
     public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
-        System.out.println(orderRequest);
         Order order = new Order();
         Destination destination = new Destination();
         Address address = new Address();
+        
         BeanUtils.copyProperties(orderRequest,order);
         BeanUtils.copyProperties(orderRequest,destination);
         BeanUtils.copyProperties(orderRequest, address);
+        order.setId(orderRequest.getOrderId());
         orderService.order(order, destination, address);
 
         // 成功情報をレスポンス
@@ -48,7 +49,6 @@ public class OrderController {
         webApiResponseObject.setStatus("success");
         webApiResponseObject.setMessage("OK.");
         webApiResponseObject.setErrorCode("E-00");
-
 
         // 以下にメールの主題、内容を入力
         // textに注文者名や注文商品、サイズを入れたいため、@RequestParamで全て受け取る

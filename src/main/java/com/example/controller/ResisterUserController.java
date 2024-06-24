@@ -27,6 +27,12 @@ public class ResisterUserController {
     @Autowired
     private RegisterUserService registerUserService;
 
+    /**
+     * デフォルトのユーザ情報を取得します。
+     *
+     * @param user 仮のユーザオブジェクト
+     * @return ユーザ情報を含むレスポンスエンティティ
+     */
     @GetMapping
     public ResponseEntity<User> showUser(User user){
         user.setName("John Doe");
@@ -38,7 +44,14 @@ public class ResisterUserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    // ユーザ登録のエンドポイント
+
+    /**
+     * 新規ユーザを登録します。
+     *
+     * @param registerUserRequest 登録するユーザのリクエストオブジェクト
+     * @return 登録結果を示すレスポンスエンティティ
+     */
+    @NonAuthorize
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest, BindingResult result) {
         if (result.hasErrors()) {
@@ -57,6 +70,7 @@ public class ResisterUserController {
 
         return new ResponseEntity<>("ユーザ登録が完了しました。", HttpStatus.CREATED);
     }
+
 
 
     @PostMapping("/check-email")

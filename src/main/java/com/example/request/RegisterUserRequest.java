@@ -1,23 +1,35 @@
 package com.example.request;
 
+/**
+ * ユーザ登録リクエストを表すクラスです.
+ *
+ * @author io.yamanaka
+ */
 public class RegisterUserRequest {
 
+    /** ユーザの名前 */
     private String name;
 
+    /** ユーザのメールアドレス */
     private String email;
 
+    /** ユーザのパスワード */
     private String password;
 
+    /** ユーザの郵便番号 */
     private String zipcode;
 
+    /** ユーザの都道府県 */
     private String prefecture;
 
+    /** ユーザの市区町村 */
     private String municipalities;
 
+    /** ユーザの住所 */
     private String address;
 
+    /** ユーザの電話番号 */
     private String telephone;
-
 
     public String getPrefecture() {
         return prefecture;
