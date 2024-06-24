@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import java.util.Map;
  *
  * @author io.yamanaka
  */
+@EnableAsync
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 @RequestMapping("/order")
@@ -49,17 +52,21 @@ public class OrderController {
         webApiResponseObject.setStatus("success");
         webApiResponseObject.setMessage("OK.");
         webApiResponseObject.setErrorCode("E-00");
+        System.out.println("★終わったよ");
+        // メール送信を非同期で行う
+        sendOrderConfirmationEmail(destination, address, order);
+        System.out.println("★メール終わったよ");
+        return webApiResponseObject;
+    }
 
-        // 以下にメールの主題、内容を入力
-        // textに注文者名や注文商品、サイズを入れたいため、@RequestParamで全て受け取る
-
+    @Async
+    public void sendOrderConfirmationEmail(Destination destination, Address address, Order order) {
         String subject = "注文完了メール";
         StringBuilder sb = new StringBuilder();
 
         // メールに記載するため、注文情報を取得
         Order orderInfo = emailService.getOrderInfo(order.getId());
 
-        // TODO メールの名前はユーザ名？それとも注文フォームの名前？
         sb.append(destination.getDestinationName()).append("様").append("\n\n");
         sb.append("ご注文ありがとうございます。\n");
         sb.append("ご注文内容は以下の通りです。\n\n");
@@ -80,6 +87,5 @@ public class OrderController {
 
         String text = sb.toString();
         emailService.sendSimpleMessage(destination.getDestinationEmail(), subject, text);
-        return webApiResponseObject;
     }
 }
