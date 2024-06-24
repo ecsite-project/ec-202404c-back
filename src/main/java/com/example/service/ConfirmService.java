@@ -17,6 +17,12 @@ public class ConfirmService {
     @Autowired
     private OrderRepository orderRepository;
 
+    /**
+     * 注文をする.
+     *
+     * @param orderId 注文ID
+     * @return Orderオブジェクト
+     */
     public Order findByOrderId(Integer orderId){
         return orderRepository.findById(orderId);
     }
