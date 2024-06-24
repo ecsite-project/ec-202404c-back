@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.request.FavoriteRequest;
 import com.example.response.ItemTypeResponse;
 import com.example.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,21 @@ public class FavoriteController {
     /**
      * お気に入りを追加する。
      *
-     * @param userId ユーザID
-     * @param itemId 商品ID
+     * @param request お気に入りリクエスト
      */
     @PostMapping("/add")
-    public void addFavorite(@RequestParam Integer userId, @RequestParam Integer itemId) {
-        favoriteService.addFavorite(userId, itemId);
+    public void addFavorite(@RequestBody FavoriteRequest request) {
+        favoriteService.addFavorite(request.getUserId(), request.getItemId());
     }
 
     /**
      * お気に入りを解除する。
      *
-     * @param userId ユーザID
-     * @param itemId 商品ID
+     * @param request お気に入りリクエスト
      */
     @PostMapping("/delete")
-    public void deleteFavorite(@RequestParam Integer userId, @RequestParam Integer itemId) {
-        favoriteService.deleteFavorite(userId, itemId);
+    public void deleteFavorite(@RequestBody FavoriteRequest request) {
+        favoriteService.deleteFavorite(request.getUserId(), request.getItemId());
     }
 
     /**
