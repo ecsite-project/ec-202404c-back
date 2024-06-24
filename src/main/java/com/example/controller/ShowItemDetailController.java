@@ -29,8 +29,8 @@ public class ShowItemDetailController {
      * @return 商品詳細
      */
     @GetMapping("/{ItemId}")
-    public ResponseEntity<ItemDetailResponse> showItemDetail(@PathVariable("ItemId") Integer ItemId) {
-//        System.out.println("" + loginUser.getUser());
+    public ResponseEntity<ItemDetailResponse> showItemDetail(@PathVariable("ItemId") Integer ItemId, @AuthenticationPrincipal LoginUser loginUser) {
+        System.out.println("" + loginUser.getUser());
         return new ResponseEntity<>(showItemDetailService.getItemDetail(ItemId, null), HttpStatus.OK);
     }
 }
