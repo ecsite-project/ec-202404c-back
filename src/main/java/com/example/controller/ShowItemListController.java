@@ -38,7 +38,7 @@ public class ShowItemListController {
      */
     @NonAuthorize
     @GetMapping("/{itemType}")
-    public ResponseEntity<ItemTypeResponse> getItemDetails(@PathVariable String itemType) {
+    public ResponseEntity<ItemTypeResponse> getItemList(@PathVariable String itemType, @RequestParam(name = "q", required = false) String query) {
         ItemTypeResponse response = new ItemTypeResponse();
         List<Item> items;
 
@@ -46,7 +46,11 @@ public class ShowItemListController {
             case "top":
             case "bottom":
             case "set":
-                items = showItemListService.getItemByType(itemType.toLowerCase());
+                if (query != null && !query.isEmpty()) {
+                    items = showItemListService.searchItemByTypeAndName(itemType.toLowerCase(), query);
+                } else {
+                    items = showItemListService.getItemByType(itemType.toLowerCase());
+                }
                 break;
             default:
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -34,7 +34,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
         // @NonAuthorizeが付与されているか確認
         if (AnnotationUtils.findAnnotation(method, NonAuthorize.class) != null) {
             // 付与されている場合は認可せずに終了
-            System.out.println("認可しない");
+            // System.out.println("認可しない");
             return true;
         }
 

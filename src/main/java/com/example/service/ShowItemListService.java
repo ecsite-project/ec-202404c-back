@@ -17,6 +17,11 @@ public class ShowItemListService {
     public List<Item> getItemByType(String itemType) {
         return repository.findByType(itemType);
     }
+
+    public List<Item> searchItemByTypeAndName(String itemType, String query){
+        System.out.println(repository.searchByNameAndTypeContaining(itemType, query));
+        return repository.searchByNameAndTypeContaining(itemType, query);
+    }
 }
 
 
