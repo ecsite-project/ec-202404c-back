@@ -1,8 +1,8 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ec
-    username: neki_haruka
+    url: jdbc:postgresql://localhost:5432/EC
+    username: postgres
     password: postgres
   jmx:
     default-domain: ec-202404c
