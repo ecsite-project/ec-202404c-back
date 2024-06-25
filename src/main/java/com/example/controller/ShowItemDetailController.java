@@ -1,6 +1,5 @@
 package com.example.controller;
 
-
 import com.example.response.ItemDetailResponse;
 import com.example.service.ShowItemDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/item")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-        RequestMethod.DELETE })
 public class ShowItemDetailController {
 
     @Autowired

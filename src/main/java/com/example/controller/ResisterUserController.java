@@ -20,7 +20,6 @@ import java.util.Map;
  * @author haruka.yamaneki
  */
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 @RequestMapping("/users")
 public class ResisterUserController {
 
@@ -84,10 +83,6 @@ public class ResisterUserController {
         return ResponseEntity.ok().build();
     }
 }
-
-
-
-
 
 
 

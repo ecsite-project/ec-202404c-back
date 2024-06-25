@@ -19,8 +19,6 @@ import java.util.List;
  * @author io.yamanaka
  */
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-        RequestMethod.DELETE })
 @RequestMapping("")
 public class HistoryController {
 

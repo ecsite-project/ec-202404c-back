@@ -27,6 +27,12 @@ public class HistoryService {
     @Autowired
     private AddressRepository addressRepository;
 
+    /**
+     * ユーザIDからOrderオブジェクトをリスト形式で取得する.
+     *
+     * @param userId ユーザID
+     * @return Orderオブジェクトが要素のリスト
+     */
     public List<Order> findByUserId(Integer userId){
         return orderRepository.findByUserId(userId);
     }
