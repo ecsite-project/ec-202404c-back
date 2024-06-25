@@ -106,6 +106,32 @@ public class ItemRepository {
     }
 
     /**
+     * 名前と商品タイプから商品を(曖昧)検索します.
+     *
+     * @param name 商品名
+     * @param itemType 商品タイプ (nullの場合は商品タイプでの絞り込みを行いません)
+     * @return 検索された商品の情報一覧
+     */
+    public List<Item> searchByNameAndTypeContaining(String itemType, String name) {
+        String sql = """
+        SELECT id, name, description, price, item_type, image_path 
+        FROM items 
+        WHERE name LIKE :name 
+        """ + (itemType != null ? " AND item_type = :itemType " : "") + """
+        
+        ORDER BY id;
+        """;
+
+        MapSqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+        if (itemType != null) {
+            param.addValue("itemType", itemType);
+        }
+
+        return template.query(sql, param, ITEM_ROW_MAPPER);
+    }
+
+
+    /**
      * 商品タイプから商品を検索します.
      *
      * @param itemType 商品タイプ
