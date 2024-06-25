@@ -34,48 +34,54 @@ public class OrderController {
     private String creditCardCheckApi;
 
     @PostMapping("/card")
-    public ResponseEntity<WebApiResponseObject> cardOrder(@RequestBody OrderRequest orderRequest, HttpServletResponse response) {
+    public ResponseEntity<WebApiResponseObject> cardOrder(@RequestBody CreditCard creditCard, HttpServletResponse response) {
         CreditCard card = new CreditCard();
-        BeanUtils.copyProperties(orderRequest, card);
-
-        // ここで必要に応じてクレジットカードのバリデーションや他の処理を行う
-        // 外部のクレジットカードチェックAPIを呼び出す
+        BeanUtils.copyProperties(creditCard, card);
+        System.out.println("card" + card);
         RestTemplate restTemplate = new RestTemplate();
         JsonNode jsonNode = restTemplate.postForObject(creditCardCheckApi, card, JsonNode.class);
+        System.out.println(jsonNode);
 
-        // レスポンスの作成
+
         WebApiResponseObject responseObject = new WebApiResponseObject();
-        responseObject.setStatus("success");
-        responseObject.setMessage("Card validation successful");
-        responseObject.setErrorCode("E-00");
+        String status = jsonNode.get("status").asText();
+        String message = jsonNode.get("message").asText();
+        String errorCode = jsonNode.get("error_code").asText();
 
-        return ResponseEntity.ok(responseObject);
+        responseObject.setStatus(status);
+        responseObject.setMessage(message);
+        responseObject.setErrorCode(errorCode);
+
+        if ("success".equals(status) && "E-00".equals(errorCode)) {
+            return ResponseEntity.ok(responseObject);
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseObject);
+        }
     }
 
-        @PostMapping("")
-        public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
-            Order order = new Order();
-            Destination destination = new Destination();
-            Address address = new Address();
+    @PostMapping("")
+    public WebApiResponseObject order(@RequestBody OrderRequest orderRequest, HttpServletResponse response){
+        Order order = new Order();
+        Destination destination = new Destination();
+        Address address = new Address();
 
-            orderRequest.setPaymentMethodId(1);
+        orderRequest.setPaymentMethodId(1);
 
-            BeanUtils.copyProperties(orderRequest,order);
-            BeanUtils.copyProperties(orderRequest,destination);
-            BeanUtils.copyProperties(orderRequest, address);
-            order.setId(orderRequest.getOrderId());
-            orderService.order(order, destination, address);
+        BeanUtils.copyProperties(orderRequest,order);
+        BeanUtils.copyProperties(orderRequest,destination);
+        BeanUtils.copyProperties(orderRequest, address);
+        order.setId(orderRequest.getOrderId());
+        orderService.order(order, destination, address);
 
-            // 成功情報をレスポンス
-            WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
-            webApiResponseObject.setStatus("success");
-            webApiResponseObject.setMessage("OK.");
-            webApiResponseObject.setErrorCode("E-00");
+        // 成功情報をレスポンス
+        WebApiResponseObject webApiResponseObject = new WebApiResponseObject();
+        webApiResponseObject.setStatus("success");
+        webApiResponseObject.setMessage("OK.");
+        webApiResponseObject.setErrorCode("E-00");
 
-            // メール送信を非同期で行う
-            emailService.sendOrderConfirmationEmail(destination, address, order);
+        // メール送信を非同期で行う
+        emailService.sendOrderConfirmationEmail(destination, address, order);
 
-
-            return webApiResponseObject;
-        }
+        return webApiResponseObject;
+    }
 }
