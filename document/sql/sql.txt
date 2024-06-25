@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS PaymentMethods cascade;
 DROP TABLE IF EXISTS Addresses cascade;
 DROP TABLE IF EXISTS Users cascade;
 DROP TABLE IF EXISTS Destinations cascade;
+DROP TABLE IF EXISTS Favorite cascade;
 
 
 -- テーブルを作成
@@ -88,6 +89,15 @@ CREATE TABLE Sets (
     FOREIGN KEY (item_id) REFERENCES Items(id),
     FOREIGN KEY (top_id) REFERENCES Items(id),
     FOREIGN KEY (bottom_id) REFERENCES Items(id)
+);
+
+-- Favoriteテーブルを作成するためのSQLコード
+CREATE TABLE Favorite (
+    user_id INT NOT NULL,
+    item_id INT NOT NULL,
+    PRIMARY KEY (user_id, item_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (item_id) REFERENCES Items(id)
 );
 
 -- Usersにデータを挿入する
@@ -219,6 +229,14 @@ VALUES
 (30, 10, 20);
 
 
+-- Favoriteテーブルにサンプルデータを挿入する
+INSERT INTO Favorite (user_id, item_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5);
+
 
 -- OrderItemsテーブルの全データを表示
 SELECT * FROM OrderItems;
@@ -246,3 +264,6 @@ SELECT * FROM Users;
 
 -- Destinationsテーブルの全データを表示
 SELECT * FROM Destinations;
+
+-- Favoriteテーブルの全データを表示
+SELECT * FROM Favorite;
