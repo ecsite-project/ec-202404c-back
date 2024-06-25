@@ -2,8 +2,10 @@ package com.example.controller;
 
 import com.example.request.FavoriteRequest;
 import com.example.response.ItemTypeResponse;
+import com.example.response.PreviewItemResponse;
 import com.example.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -46,5 +48,18 @@ public class FavoriteController {
     @GetMapping("/{userId}")
     public ItemTypeResponse getFavoritesByUserId(@PathVariable Integer userId) {
         return favoriteService.getFavoritesByUserId(userId);
+    }
+
+    /**
+     * 指定したユーザIDのお気に入り商品一覧を取得する。
+     *
+     * @param userId ユーザID
+     * @return お気に入り商品一覧
+     */
+    @GetMapping("/forpreview/{userId}")
+    public ResponseEntity<PreviewItemResponse> getPreviewItem(@PathVariable Integer userId) {
+        PreviewItemResponse response = new PreviewItemResponse();
+        response.setItems(favoriteService.getFavoritesByUserIdForPreview(userId));
+        return ResponseEntity.ok(response);
     }
 }

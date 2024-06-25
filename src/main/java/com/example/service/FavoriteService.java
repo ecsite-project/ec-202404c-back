@@ -2,9 +2,13 @@ package com.example.service;
 
 import com.example.repository.FavoriteRepository;
 import com.example.response.ItemTypeResponse;
+import com.example.response.PreviewItem;
+import com.example.response.PreviewItemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Favoriteサービスクラス。
@@ -46,5 +50,15 @@ public class FavoriteService {
      */
     public ItemTypeResponse getFavoritesByUserId(Integer userId) {
         return favoriteRepository.getFavoritesByUserId(userId);
+    }
+
+    /**
+     * 指定したユーザIDのお気に入り商品一覧を取得する。
+     *
+     * @param userId ユーザID
+     * @return お気に入り商品一覧
+     */
+    public List<PreviewItem> getFavoritesByUserIdForPreview(Integer userId) {
+        return favoriteRepository.getFavoritesByUserIdForPreview(userId);
     }
 }
