@@ -1,23 +1,23 @@
 package com.example.response;
 
 public class PreviewItem {
-    private Integer itemId;
+    private Integer id;
     private String name;
     private String description;
     private Integer price;
-    private String itemType;
+    private String baseType;
     private String imagePath;
     private Integer topId;
     private String topImagePath;
     private Integer bottomId;
     private String bottomImagePath;
 
-    public Integer getItemId() {
-        return itemId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,12 +44,12 @@ public class PreviewItem {
         this.price = price;
     }
 
-    public String getItemType() {
-        return itemType;
+    public String getBaseType() {
+        return baseType;
     }
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
+    public void setBaseType(String itemType) {
+        this.baseType = itemType;
     }
 
     public String getImagePath() {
@@ -96,11 +96,11 @@ public class PreviewItem {
     public String toString() {
         return "PreviewItemResponse{" +
                 "bottomId=" + bottomId +
-                ", itemId=" + itemId +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", itemType='" + itemType + '\'' +
+                ", itemType='" + baseType + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", topId=" + topId +
                 ", topImagePath='" + topImagePath + '\'' +
