@@ -67,4 +67,3 @@ public class EmailService {
         this.sendSimpleMessage(destination.getDestinationEmail(), subject, text);
     }
 }
-

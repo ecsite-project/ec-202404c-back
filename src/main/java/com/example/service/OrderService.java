@@ -37,7 +37,7 @@ public class OrderService {
      */
     public void order(Order order, Destination destination, Address address){
         if (order.getPaymentMethodId() == 1){
-            order.setStatusId(1);
+            order.setStatusId(2);
         }
         if (order.getPaymentMethodId() == 2){
             order.setStatusId(2);
