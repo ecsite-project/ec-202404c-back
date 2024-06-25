@@ -23,7 +23,6 @@ import java.util.List;
  */
 @EnableAsync
 @RestController
-@RequestMapping("/order")
 public class OrderController {
 
     @Autowired

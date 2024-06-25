@@ -77,7 +77,7 @@ public class JsonWebTokenUtil {
     }
 
     /**
-     * クライアントからのリクエストの情報から、認証トークンを取得して認可処理を行います.
+     * クライアントからのリクエストの情報から、認証トークンを取得HttpServletRequest request,して認可処理を行います.
      *
      * @param request リクエスト情報
      * @return 認可OK:true / 認可NG:false
