@@ -1,11 +1,14 @@
 package com.example.controller;
 
+import com.example.domain.LoginUser;
 import com.example.request.FavoriteRequest;
 import com.example.response.ItemTypeResponse;
 import com.example.response.PreviewItemResponse;
+import com.example.security.Authorize;
 import com.example.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,26 +43,26 @@ public class FavoriteController {
     }
 
     /**
-     * 指定したユーザIDのお気に入り商品一覧を取得する。
+     * ログイン中のユーザのお気に入り商品一覧を取得する。
      *
-     * @param userId ユーザID
      * @return お気に入り商品一覧
      */
-    @GetMapping("/{userId}")
-    public ItemTypeResponse getFavoritesByUserId(@PathVariable Integer userId) {
-        return favoriteService.getFavoritesByUserId(userId);
+    @Authorize
+    @GetMapping("")
+    public ItemTypeResponse getFavoritesByUserId(@AuthenticationPrincipal LoginUser loginUser) {
+        return favoriteService.getFavoritesByUserId(loginUser.getUser().getId());
     }
 
     /**
-     * 指定したユーザIDのお気に入り商品一覧を取得する。
+     * ログイン中のユーザのお気に入り商品一覧を取得する。
      *
-     * @param userId ユーザID
      * @return お気に入り商品一覧
      */
-    @GetMapping("/forpreview/{userId}")
-    public ResponseEntity<PreviewItemResponse> getPreviewItem(@PathVariable Integer userId) {
+    @Authorize
+    @GetMapping("/forpreview")
+    public ResponseEntity<PreviewItemResponse> getPreviewItem(@AuthenticationPrincipal LoginUser loginUser) {
         PreviewItemResponse response = new PreviewItemResponse();
-        response.setItems(favoriteService.getFavoritesByUserIdForPreview(userId));
+        response.setItems(favoriteService.getFavoritesByUserIdForPreview(loginUser.getUser().getId()));
         return ResponseEntity.ok(response);
     }
 }

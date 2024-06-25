@@ -36,11 +36,11 @@ public class FavoriteRepository {
 
     private static final RowMapper<PreviewItem> PREVIEW_ITEM_RESPONSE_ROW_MAPPER = (rs, i) -> {
         PreviewItem item = new PreviewItem();
-        item.setItemId(rs.getInt("item_id"));
+        item.setId(rs.getInt("item_id"));
         item.setName(rs.getString("name"));
         item.setDescription(rs.getString("description"));
         item.setPrice(rs.getInt("price"));
-        item.setItemType(rs.getString("item_type"));
+        item.setBaseType(rs.getString("item_type"));
         item.setImagePath(rs.getString("image_path"));
         item.setTopId(rs.getInt("top_id"));
         item.setTopImagePath(rs.getString("top_image_path"));
