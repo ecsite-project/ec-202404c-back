@@ -24,7 +24,12 @@ public class ShowItemDetailService {
      * @param itemId　商品id
      * @return 商品詳細
      */
-    public ItemDetailResponse getItemDetail(Integer itemId){
-        return itemRepository.findById(itemId);
+    public ItemDetailResponse getItemDetail(Integer itemId, Integer userId){
+        if(userId == null){
+            return itemRepository.findById(itemId);
+        }
+        else{
+            return itemRepository.findByIdWithFavorite(itemId, userId);
+        }
     }
 }
