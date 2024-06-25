@@ -1,73 +1,23 @@
 package com.example.response;
 
-/**
- * 商品詳細を返すレスポンスクラスです.
- *
- * @author io.yamanaka
- */
-public class ItemDetailResponse {
-
-    /**
-     * 商品のID。
-     */
-    private Integer id;
-
-    /**
-     * 商品の名前。
-     */
+public class PreviewItem {
+    private Integer itemId;
     private String name;
-
-    /**
-     * 商品の説明。
-     */
     private String description;
-
-    /**
-     * 商品の価格。
-     */
     private Integer price;
-
-    /**
-     * 商品の種類。 ('top', 'bottom', 'set')
-     */
     private String itemType;
-
-    /**
-     * 商品の画像パス。
-     */
     private String imagePath;
-
-    /**
-     * セットのトップアイテムのID。
-     */
     private Integer topId;
-
-    /**
-     * セットのボトムアイテムのID。
-     */
-    private Integer bottomId;
-
-    /**
-     * セットのトップアイテムの画像パス。
-     */
     private String topImagePath;
-
-    /**
-     * セットのボトムアイテムの画像パス。
-     */
+    private Integer bottomId;
     private String bottomImagePath;
 
-    /**
-     * 現在登録しているユーザがお気に入り登録しているか。
-     */
-    private boolean isFavorite;
-
-    public Integer getId() {
-        return id;
+    public Integer getItemId() {
+        return itemId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -118,20 +68,20 @@ public class ItemDetailResponse {
         this.topId = topId;
     }
 
-    public Integer getBottomId() {
-        return bottomId;
-    }
-
-    public void setBottomId(Integer bottomId) {
-        this.bottomId = bottomId;
-    }
-
     public String getTopImagePath() {
         return topImagePath;
     }
 
     public void setTopImagePath(String topImagePath) {
         this.topImagePath = topImagePath;
+    }
+
+    public Integer getBottomId() {
+        return bottomId;
+    }
+
+    public void setBottomId(Integer bottomId) {
+        this.bottomId = bottomId;
     }
 
     public String getBottomImagePath() {
@@ -142,28 +92,19 @@ public class ItemDetailResponse {
         this.bottomImagePath = bottomImagePath;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
-
     @Override
     public String toString() {
-        return "ItemDetailResponse{" +
-                "id=" + id +
+        return "PreviewItemResponse{" +
+                "bottomId=" + bottomId +
+                ", itemId=" + itemId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", itemType='" + itemType + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", topId=" + topId +
-                ", bottomId=" + bottomId +
                 ", topImagePath='" + topImagePath + '\'' +
                 ", bottomImagePath='" + bottomImagePath + '\'' +
-                ", isFavorite=" + isFavorite +
                 '}';
     }
 }

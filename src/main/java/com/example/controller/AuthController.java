@@ -40,6 +40,8 @@ public class AuthController {
     /**
      * ログインを行います.
      * @param request
+     * @param result
+     * @param model
      * @param response
      * @return webApiResponseObject
      */
@@ -98,7 +100,7 @@ public class AuthController {
         Date expirationDate = claims.getExpiration();
 
         // トークンをブラックリストに追加
-        jwtBlacklistService.addToBlacklist(accessToken, expirationDate);
+        jwtBlacklistService .addToBlacklist(accessToken, expirationDate);
 
         // 成功情報をレスポンス
         WebApiResponseObject webApiResponseObject = new WebApiResponseObject();

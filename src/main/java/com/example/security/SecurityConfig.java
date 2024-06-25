@@ -98,7 +98,6 @@ public class SecurityConfig implements WebMvcConfigurer {
         return new BCryptPasswordEncoder();
     }
 
-    // グローバルな CORS 設定を追加
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
