@@ -60,7 +60,7 @@ public class EmailService {
             totalPrice += item.getItem().getPrice() * item.getQuantity();
         }
         sb.append("合計金額(税抜)：").append(totalPrice).append("円").append("\n");
-        sb.append("合計金額(税込)：").append((int)totalPrice*1.1).append("円").append("\n\n");
+        sb.append("合計金額(税込)：").append((int)(totalPrice*1.1)).append("円").append("\n\n");
         sb.append("お届け先：").append(address.getPrefecture() + " "+ address.getMunicipalities() + " "+ address.getAddress()).append("\n");
         sb.append("お届け予定日時：").append(order.getDeliveryDate()).append("\n");
         sb.append("===============================\n\n");
