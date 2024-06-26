@@ -51,12 +51,16 @@ public class EmailService {
         sb.append("===============================\n");
         sb.append("注文商品：\n");
         List<OrderItem> orderItemList = orderInfo.getItemList();
+        int totalPrice = 0;
         for (OrderItem item : orderItemList){
             sb.append("　　商品名：").append(item.getItem().getName()).append("\n");
             sb.append("　　サイズ：").append(item.getSize()).append("\n");
             sb.append("　　個数：").append(item.getQuantity()).append("点").append("\n");
-            sb.append("　　1点当たりの価格：").append(item.getItem().getPrice()).append("円").append("\n\n");
+            sb.append("　　1点当たりの価格：").append(item.getItem().getPrice()).append("円(税抜)").append("\n\n");
+            totalPrice += item.getItem().getPrice() * item.getQuantity();
         }
+        sb.append("合計金額(税抜)：").append(totalPrice).append("円").append("\n");
+        sb.append("合計金額(税込)：").append((int)totalPrice*1.1).append("円").append("\n\n");
         sb.append("お届け先：").append(address.getPrefecture() + " "+ address.getMunicipalities() + " "+ address.getAddress()).append("\n");
         sb.append("お届け予定日時：").append(order.getDeliveryDate()).append("\n");
         sb.append("===============================\n\n");
