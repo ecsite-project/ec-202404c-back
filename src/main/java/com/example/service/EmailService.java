@@ -57,11 +57,11 @@ public class EmailService {
             sb.append("　　個数：").append(item.getQuantity()).append("点").append("\n");
             sb.append("　　1点当たりの価格：").append(item.getItem().getPrice()).append("円").append("\n\n");
         }
-        sb.append("\n");
         sb.append("お届け先：").append(address.getPrefecture() + " "+ address.getMunicipalities() + " "+ address.getAddress()).append("\n");
         sb.append("お届け予定日時：").append(order.getDeliveryDate()).append("\n");
         sb.append("===============================\n\n");
-        sb.append("またのご利用をお待ちしております。");
+        sb.append("またのご利用をお待ちしております。\n\n");
+        sb.append("RakuStyle");
 
         String text = sb.toString();
         this.sendSimpleMessage(destination.getDestinationEmail(), subject, text);
