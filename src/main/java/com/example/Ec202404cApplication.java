@@ -13,7 +13,7 @@ import java.util.concurrent.Executor;
 
 @EnableAsync
 @SpringBootApplication
-public class Ec202404cApplication {
+public class Ec202404cApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Ec202404cApplication.class, args);
@@ -43,5 +43,10 @@ public class Ec202404cApplication {
 		executor.setThreadNamePrefix("TaskThread-");
 		executor.initialize();
 		return executor;
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ExEmpManagementApplication.class);
 	}
 }
